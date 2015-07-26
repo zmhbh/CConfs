@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="blue">#303F9F</color>
+
+    <color name="accent_color">#FF00E5FF</color>
+    <color name="colorPrimary">#32cd80</color>
+    <color name="colorPrimaryDark">#2bb676</color>
+    <color name="statusBarColor">@color/colorPrimary</color>
+    <color name="navigationBarColor">@android:color/black</color>
+    <color name="drawerArrowColor">@android:color/white</color>
+
+
+<!--for scrollview-->
+
+    <color name="bg_item_normal_state">#fff0f0f0</color>
+    <color name="bg_group_item_normal_state">#ffddffdd</color>
+    <color name="bg_group_item_normal_pressed_state">#ff99cc99</color>
+    <color name="bg_group_item_expanded_state">#ff88dd88</color>
+    <color name="bg_group_item_expanded_pressed_state">#ff99cc99</color>
+
+    <!--sponsor list view-->
+    <color name="divider">#CCC</color>
+
+    <!--loading view-->
+    <color name="background">@android:color/white</color>
+
+    <!--<color name="background">#65828e</color>-->
+    <color name="secondary_color">#BDBDBD</color>
+</resources>

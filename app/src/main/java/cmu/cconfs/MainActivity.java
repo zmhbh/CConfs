@@ -1,14 +1,15 @@
 package cmu.cconfs;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.dk.view.folder.ResideMenu;
 import com.dk.view.folder.ResideMenuItem;
+import com.parse.ParseAnalytics;
 
 import cmu.cconfs.fragment.HomeFragment;
 
@@ -25,6 +26,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // for analytics
+        ParseAnalytics.trackAppOpenedInBackground(getIntent());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupMenu();
@@ -54,7 +58,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         itemHome_right = new ResideMenuItem(this, R.drawable.ic_home_white_48dp, "Home");
          /*
          */
-        itemMySchedule_left = new ResideMenuItem(this, R.drawable.ic_home, "My Schedule");
+        itemMySchedule_left = new ResideMenuItem(this, R.drawable.ic_alarm_on_white_48dp, "My Schedule");
         itemMySchedule_right = new ResideMenuItem(this, R.drawable.ic_alarm_on_white_48dp, "My Schedule");
 
         itemHome_left.setOnClickListener(this);
@@ -78,12 +82,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
 
-        if(v==itemHome_left||v==itemHome_right){
-            Intent intent =new Intent();
+        if (v == itemHome_left || v == itemHome_right) {
+            Intent intent = new Intent();
             intent.setClass(this, HomeActivity.class);
-            startActivity(intent);
-        }else{
 
+            startActivity(intent);
+            resideMenu.closeMenu();
+        } else {
+            Intent intent = new Intent();
+            intent.setClass(this, ScheduleActivity.class);
+
+            startActivity(intent);
+            resideMenu.closeMenu();
         }
     }
 
@@ -99,7 +109,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     };
 
-    public ResideMenu getResideMenu(){
+    public ResideMenu getResideMenu() {
         return resideMenu;
     }
 }

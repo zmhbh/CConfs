@@ -2,14 +2,15 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "23.0.0 rc3"
-
+    buildToolsVersion '22.0.1'
     defaultConfig {
         applicationId "cmu.cconfs"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        // Enabling multidex support.
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -17,12 +18,51 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:cardview-v7:22.2.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.android.support:palette-v7:21.0.0'
+    compile 'com.android.support:palette-v7:22.0.0'
     compile project(':library_resideMenu')
+    compile project(':library_dynamicGrid')
+    compile('com.github.florent37:materialviewpager:1.0.8@aar') {
+        transitive = true;
+    }
+    compile 'com.yalantis:contextmenu:1.0.4'
+    compile 'com.android.support:design:22.2.1'
+    // NOTE: vector-compat is available on API level 14 or later
+    compile 'com.wnafee:vector-compat:1.0.5'
+    //expandable recycler view
+    compile 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.7.3'
+    //scrollview
+    compile 'com.github.ksoichiro:android-observablescrollview'
+    // material widget
+    compile 'com.github.rey5137:material:1.2.1'
+    //Floor Guide Library
+    compile 'com.xgc1986.android:parallaxpagertransformer:1.0.3'
+    compile 'com.google.android.gms:play-services:4.2.42'
+    compile 'com.google.code.gson:gson:2.3.1'
+    // notification swipe
+    compile 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.2'
+    // sponsor list view
+    //    compile 'co.dift.ui.swipetoaction:library:1.1'
+    compile 'com.facebook.fresco:fresco:0.5.3+'
+    //webview
+    compile 'org.jsoup:jsoup:1.8.1'
+    //facebook parse
+    compile 'com.parse:parse-android:1.10.1'
+    //facebook parse notification
+    compile 'com.parse.bolts:bolts-android:1.+'
+    //loading
+    compile 'com.github.jlmd:AnimatedCircleLoadingView:1.1@aar'
+    //material icon
+    compile 'net.steamcrafted:materialiconlib:1.0.4'
+    //ripple effect
+    compile 'com.github.traex.rippleeffect:library:1.3'
+    compile files('libs/easemobchat_2.2.2.jar')
 }

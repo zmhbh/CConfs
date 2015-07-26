@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"  tools:context="cmu.cconfs.MapActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/mapView"
+        android:padding="5dp"
+        android:background="@color/background">
+        <fragment
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@+id/btn_route"
+            android:layout_alignParentTop="true" />
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/button_route"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/button_selector"
+        android:padding="12dp"
+        android:text="Route"
+        android:onClick="goGoogleMaps"
+        android:textColor="@android:color/white"
+        android:textSize="17sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp" />
+
+
+</RelativeLayout>

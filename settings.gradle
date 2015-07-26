@@ -1,1 +1,1 @@
-include ':app', ':library_resideMenu'
+include ':app', ':library_resideMenu', ':library_dynamicGrid'
