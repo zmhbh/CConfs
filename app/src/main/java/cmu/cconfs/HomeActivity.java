@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = HomeActivity.class.getName();
     private DynamicGridView gridView;
-    private String[] titles = {"Program", "My Schedule", "Map", "Floor Guide", "Sponsor", "Notification", "About", "Setting"};
+    private String[] titles = {"Program", "My Schedule", "Map", "Floor Guide", "Sponsor", "Notification", "About", "Setting", "Chat"};
 
 
     @Override
@@ -90,6 +90,11 @@ public class HomeActivity extends AppCompatActivity {
 
 //                        intent.setClass(getApplicationContext(),PaperActivity.class);
 //                        startActivity(intent);
+                        break;
+
+                    case 8:
+                        intent.setClass(getApplicationContext(), IMActivity.class);
+                        startActivity(intent);
                         break;
 
                     default:

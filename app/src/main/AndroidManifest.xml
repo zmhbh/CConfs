@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="cmu.cconfs">
+    package="cmu.cconfs" >
 
     <uses-sdk tools:overrideLibrary="com.wnafee.vector" />
 
@@ -19,7 +19,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -27,10 +27,11 @@
     <!--
   IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
   to match your app's package name + ".permission.C2D_MESSAGE".
--->
+    -->
     <permission
         android:name="cmu.cconfs.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="cmu.cconfs.permission.C2D_MESSAGE" />
 
     <application
@@ -38,27 +39,26 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme" >
 
         <!-- configuration of easemob appkey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="sv-cmu#cconfs" />
         <!-- 声明sdk所需的service -->
-        <service android:name="com.easemob.chat.EMChatService"/>
+        <service android:name="com.easemob.chat.EMChatService" />
         <!-- 声明sdk所需的receiver -->
-        <receiver android:name="com.easemob.chat.EMMonitorReceiver">
+        <receiver android:name="com.easemob.chat.EMMonitorReceiver" >
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-
 
         <!-- configuration of baidu maps api -->
 
@@ -73,58 +73,55 @@
 
         <activity
             android:name=".LoadingActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".LoadingActivityTest"
-            android:label="@string/app_name"/>
+            android:label="@string/app_name" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main_activity"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"/>
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" />
         <activity
             android:name=".HomeActivity"
-            android:label="@string/title_activity_home"/>
+            android:label="@string/title_activity_home" />
         <activity
             android:name=".AgendaActivity"
-            android:label="@string/title_activity_agenda"/>
+            android:label="@string/title_activity_agenda" />
         <activity
             android:name=".SessionActivity"
             android:label="@string/title_activity_session"
-            android:theme="@style/Toolbar"/>
+            android:theme="@style/Toolbar" />
         <activity
             android:name=".PaperActivity"
-            android:label="@string/title_activity_paper"/>
+            android:label="@string/title_activity_paper" />
         <activity
             android:name=".FloorGuideActivity"
-            android:label="@string/title_activity_floor_guide"/>
+            android:label="@string/title_activity_floor_guide" />
         <activity
             android:name=".MapActivity"
-            android:label="@string/title_activity_map"/>
+            android:label="@string/title_activity_map" />
         <activity
             android:name=".NotificationActivity"
-            android:label="@string/title_activity_notification"/>
+            android:label="@string/title_activity_notification" />
         <activity
             android:name=".SponsorActivity"
-            android:label="@string/title_activity_sponsor"/>
+            android:label="@string/title_activity_sponsor" />
         <activity
             android:name=".AboutActivity"
-            android:label="@string/title_activity_about"/>
+            android:label="@string/title_activity_about" />
         <activity
             android:name=".ScheduleActivity"
-            android:label="@string/title_activity_schedule"/>
-
+            android:label="@string/title_activity_schedule" />
 
         <service android:name="com.parse.PushService" />
 
-        <receiver
-            android:name="com.parse.ParseBroadcastReceiver">
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -132,7 +129,7 @@
         </receiver>
         <receiver
             android:name=".parseUtils.receiver.CustomPushReceiver"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -143,19 +140,24 @@
         </receiver>
         <receiver
             android:name="com.parse.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <!--
-                  IMPORTANT: Change "com.parse.starter" to match your app's package name.
-                -->
+<!--                   IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
                 <category android:name="cmu.cconfs" />
             </intent-filter>
         </receiver>
 
-        <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/ic_alarm_on_black_48dp"/>
+        <meta-data
+            android:name="com.parse.push.notification_icon"
+            android:resource="@drawable/ic_alarm_on_black_48dp" />
+
+        <activity
+            android:name=".IMActivity"
+            android:label="@string/title_activity_im" >
+        </activity>
     </application>
 
 </manifest>
