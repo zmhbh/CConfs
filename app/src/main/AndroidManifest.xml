@@ -145,7 +145,7 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-<!--                   IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
+                <!-- IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
                 <category android:name="cmu.cconfs" />
             </intent-filter>
         </receiver>
@@ -154,6 +154,10 @@
             android:name="com.parse.push.notification_icon"
             android:resource="@drawable/ic_alarm_on_black_48dp" />
 
+        <activity
+            android:name=".utils.IMActivity"
+            android:label="@string/title_activity_im" >
+        </activity>
         <activity
             android:name=".IMActivity"
             android:label="@string/title_activity_im" >

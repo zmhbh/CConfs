@@ -67,7 +67,7 @@ public class HomeGridDynamicAdapter extends BaseDynamicGridAdapter {
 
     @Override
     public int getCount() {
-        return 8;
+        return 9;
     }
 
 

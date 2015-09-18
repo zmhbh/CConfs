@@ -1,9 +1,11 @@
-package cmu.cconfs;
+package cmu.cconfs.utils;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import cmu.cconfs.R;
 
 public class IMActivity extends AppCompatActivity {
 

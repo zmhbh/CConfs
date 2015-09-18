@@ -144,11 +144,17 @@ public class MapActivity extends Activity {
         if (location == null)
             Toast.makeText(getApplicationContext(),
                     "error", Toast.LENGTH_SHORT).show();
-        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http:/a/maps.google.com/maps?"
-                + "saddr=" + location.getLatitude() + "," + location.getLongitude() + "&daddr=" + destination));
+//        String directionweburl="http:/a/maps.google.com/maps?"
+//                + "saddr=" + location.getLatitude() + "," + location.getLongitude() + "&daddr=" + destination;
+                String directionweburl="google.navigation:q=37.788019,-122.401890" ;
+//        Toast.makeText(getApplicationContext(),
+//                "lat: "+location.getLatitude()+" lgt: "+location.getLongitude(), Toast.LENGTH_SHORT).show();
 
-        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(directionweburl));
 
+        intent.setPackage("com.google.android.apps.maps");
+        //intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+       // intent.setClassName("com.google.android.apps.maps", "om.google.android.maps.driveabout.app.NavigationActivity");
         startActivity(intent);
     }
 
@@ -183,11 +189,11 @@ public class MapActivity extends Activity {
 
         /** Make sure that the map has been initialised **/
         if (null != googleMap) {
-            LatLng latlng = new LatLng(40.757116, -73.984865);
+            LatLng latlng = new LatLng(37.788019, -122.401890);
             googleMap.addMarker(new MarkerOptions()
                             .position(latlng)
-                            .title("Millennium Broadway Hotel")
-                            .snippet("145 West 44th Street, New York")
+                            .title("Palace Hotel")
+                            .snippet("2 New Montgomery St, San Francisco, CA")
                             .draggable(true)
             );
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 14));
