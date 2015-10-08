@@ -1,7 +1,9 @@
 package cmu.cconfs;
 
 import android.app.Application;
+import android.content.Context;
 
+import com.easemob.EMCallBack;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.parse.Parse;
 import com.parse.ParseACL;
@@ -10,6 +12,7 @@ import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseUser;
 
+import cmu.cconfs.instantMessage.IMHXSDKHelper;
 import cmu.cconfs.model.Todo;
 import cmu.cconfs.model.parseModel.Message;
 import cmu.cconfs.model.parseModel.Paper;
@@ -38,6 +41,21 @@ public class CConfsApplication extends Application {
         return dataProvider.getUnityDataProvider(dateIndex);
     }
 
+//    instant message
+public static Context applicationContext;
+    private static CConfsApplication instance;
+    // login user name
+    public final String PREF_USERNAME = "username";
+
+    /**
+     * 当前用户nickname,为了苹果推送不是userid而是昵称
+     */
+    public static String currentUserNick = "";
+    public static IMHXSDKHelper hxSDKHelper = new IMHXSDKHelper();
+
+    private static final String ParseAppID = "UUL8TxlHwKj7ZXEUr2brF3ydOxirCXdIj9LscvJs";
+    private static final String ParseClientKey = "B1jH9bmxuYyTcpoFfpeVslhmLYsytWTxqYqKQhBJ";
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -60,6 +78,7 @@ public class CConfsApplication extends Application {
         // enable the Local Datastore
         Parse.enableLocalDatastore(getApplicationContext());
         Parse.initialize(this, "XHVlAsAd6VC4VcL0FaTuRO3HuhpDlN7AlkWoJgLE", "kjyUc3p4BTrb2MRBwz6IrsohhTW3EyPtAoXaAXFu");
+//        Parse.initialize(this,ParseAppID,ParseClientKey);
         ParseInstallation.getCurrentInstallation().saveInBackground();
         ParsePush.subscribeInBackground("CConfs");
 
@@ -67,7 +86,59 @@ public class CConfsApplication extends Application {
         ParseACL defaultACL = new ParseACL();
         ParseACL.setDefaultACL(defaultACL, true);
 
+//        instant message
+        applicationContext = this;
+        instance = this;
+        hxSDKHelper.onInit(applicationContext);
+    }
+
+    public static CConfsApplication getInstance() {
+        return instance;
     }
 
 
+    /**
+     * 获取当前登陆用户名
+     *
+     * @return
+     */
+    public String getUserName() {
+        return hxSDKHelper.getHXId();
+    }
+
+    /**
+     * 获取密码
+     *
+     * @return
+     */
+    public String getPassword() {
+        return hxSDKHelper.getPassword();
+    }
+
+    /**
+     * 设置用户名
+     *
+     * @param user
+     */
+    public void setUserName(String username) {
+        hxSDKHelper.setHXId(username);
+    }
+
+    /**
+     * 设置密码 下面的实例代码 只是demo，实际的应用中需要加password 加密后存入 preference 环信sdk
+     * 内部的自动登录需要的密码，已经加密存储了
+     *
+     * @param pwd
+     */
+    public void setPassword(String pwd) {
+        hxSDKHelper.setPassword(pwd);
+    }
+
+    /**
+     * 退出登录,清空数据
+     */
+    public void logout(final boolean isGCM,final EMCallBack emCallBack) {
+        // 先调用sdk logout，在清理app中自己的数据
+        hxSDKHelper.logout(isGCM,emCallBack);
+    }
 }

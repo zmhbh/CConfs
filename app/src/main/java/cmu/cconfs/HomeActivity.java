@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = HomeActivity.class.getName();
     private DynamicGridView gridView;
-    private String[] titles = {"Program", "My Schedule", "Map", "Floor Guide", "Sponsor", "Notification", "About", "Setting", "Chat"};
+    private String[] titles = {"Agenda", "My Schedule", "Map", "Floor Guide", "Sponsor", "Notification", "About", "Setting", "Chat"};
 
 
     @Override

@@ -146,7 +146,7 @@ public class AgendaActivity extends AppCompatActivity implements OnMenuItemClick
         mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
         mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
 
-        mViewPager.getViewPager().setCurrentItem(3);
+        mViewPager.getViewPager().setCurrentItem(0);
     }
 
     private void initMenuFragment() {

@@ -132,8 +132,9 @@
     <orderEntry type="library" exported="" name="imagepipeline-0.5.3" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-22.2.1" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="material-1.2.1" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
+    <orderEntry type="library" exported="" name="locSDK_3.3" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3.1" level="project" />
     <orderEntry type="library" exported="" name="AnimatedCircleLoadingView-1.1" level="project" />
     <orderEntry type="library" exported="" name="fresco-0.5.3" level="project" />
@@ -143,6 +144,7 @@
     <orderEntry type="library" exported="" name="contextmenu-1.0.4" level="project" />
     <orderEntry type="library" exported="" name="parallaxpagertransformer-1.0.3" level="project" />
     <orderEntry type="library" exported="" name="fbcore-0.5.3" level="project" />
+    <orderEntry type="library" exported="" name="baidumapapi_v3_2_0" level="project" />
     <orderEntry type="library" exported="" name="jsoup-1.8.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
     <orderEntry type="module" module-name="library_dynamicGrid" exported="" />

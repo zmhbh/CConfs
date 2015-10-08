@@ -57,8 +57,10 @@ public class HomeGridDynamicAdapter extends BaseDynamicGridAdapter {
                 break;
             case 7:
                 imageResource = R.drawable.ic_settings_black_48dp;
+                break;
             case 8:
                 imageResource = R.drawable.ic_supervisor_account_black_48dp;
+                break;
 
         }
         holder.build(getItem(position).toString(), imageResource);
