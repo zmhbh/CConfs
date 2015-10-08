@@ -19,6 +19,7 @@ import cmu.cconfs.model.parseModel.Session_Timeslot;
 import cmu.cconfs.model.parseModel.Timeslot;
 import cmu.cconfs.model.parseModel.Version;
 import cmu.cconfs.utils.data.DataProvider;
+import cmu.cconfs.utils.data.RoomProvider;
 
 public class LoadingActivity extends AppCompatActivity {
 
@@ -111,6 +112,7 @@ public class LoadingActivity extends AppCompatActivity {
 
         success = true;
         populateDataProvider();
+        populateRoomProvider();
 //        Toast.makeText(LoadingActivity.this, "populateDataProvider finished:",
 //                Toast.LENGTH_SHORT).show();
         animatedCircleLoadingView.stopOk();
@@ -187,5 +189,10 @@ public class LoadingActivity extends AppCompatActivity {
         CConfsApplication application = new CConfsApplication();
         DataProvider dataProvider = new DataProvider();
         application.setDataProvider(dataProvider);
+    }
+    private void populateRoomProvider() {
+        CConfsApplication application = new CConfsApplication();
+        RoomProvider roomProvider = new RoomProvider();
+        application.setRoomProvider(roomProvider);
     }
 }

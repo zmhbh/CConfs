@@ -41,24 +41,27 @@ public class HomeGridDynamicAdapter extends BaseDynamicGridAdapter {
                 imageResource = R.drawable.ic_alarm_on_black_48dp;
                 break;
             case 2:
-                imageResource = R.drawable.ic_directions_black_48dp;
+                imageResource = R.drawable.room;
                 break;
             case 3:
-                imageResource = R.drawable.ic_event_seat_black_48dp;
+                imageResource = R.drawable.ic_directions_black_48dp;
                 break;
             case 4:
-                imageResource = R.drawable.ic_stars_black_48dp;
+                imageResource = R.drawable.ic_event_seat_black_48dp;
                 break;
             case 5:
-                imageResource = R.drawable.ic_notifications_active_black_48dp;
+                imageResource = R.drawable.ic_stars_black_48dp;
                 break;
             case 6:
-                imageResource = R.drawable.ic_info_outline_black_48dp;
+                imageResource = R.drawable.ic_notifications_active_black_48dp;
                 break;
             case 7:
-                imageResource = R.drawable.ic_settings_black_48dp;
+                imageResource = R.drawable.ic_info_outline_black_48dp;
                 break;
             case 8:
+                imageResource = R.drawable.ic_settings_black_48dp;
+                break;
+            case 9:
                 imageResource = R.drawable.ic_supervisor_account_black_48dp;
                 break;
 
@@ -69,7 +72,7 @@ public class HomeGridDynamicAdapter extends BaseDynamicGridAdapter {
 
     @Override
     public int getCount() {
-        return 9;
+        return 10;
     }
 
 

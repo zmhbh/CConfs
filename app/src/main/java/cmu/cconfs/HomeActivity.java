@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = HomeActivity.class.getName();
     private DynamicGridView gridView;
-    private String[] titles = {"Agenda", "My Schedule", "Map", "Floor Guide", "Sponsor", "Notification", "About", "Setting", "Chat"};
+    private String[] titles = {"Agenda", "My Schedule", "Room Schedule","Map", "Floor Guide", "Sponsor", "Notification", "About", "Setting", "Chat"};
 
 
     @Override
@@ -54,45 +54,52 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
 
-                    //map
+                    //room schedule
                     case 2:
+                        intent.setClass(getApplicationContext(), RoomScheduleActivity.class);
+                        startActivity(intent);
+                        break;
+                    //map
+                    case 3:
                         intent.setClass(getApplicationContext(), MapActivity.class);
                         startActivity(intent);
                         break;
 
                     //Floor Guide
-                    case 3:
+                    case 4:
                         intent.setClass(getApplicationContext(), FloorGuideActivity.class);
                         startActivity(intent);
                         break;
 
                     //Sponsor
-                    case 4:
+                    case 5:
                         intent.setClass(getApplicationContext(), SponsorActivity.class);
                         startActivity(intent);
                         break;
 
                     //Notification
-                    case 5:
+                    case 6:
                         intent.setClass(getApplicationContext(), NotificationActivity.class);
                         startActivity(intent);
                         break;
 
                     //About
-                    case 6:
+                    case 7:
                         intent.setClass(getApplicationContext(), AboutActivity.class);
                         intent.putExtra("link", "about");
                         startActivity(intent);
                         break;
 
                     //Setting
-                    case 7:
+                    case 8:
+
+                        break;
 
 //                        intent.setClass(getApplicationContext(),PaperActivity.class);
 //                        startActivity(intent);
-                        break;
+//                        break;
 
-                    case 8:
+                    case 9:
                         intent.setClass(getApplicationContext(), IMActivity.class);
                         startActivity(intent);
                         break;

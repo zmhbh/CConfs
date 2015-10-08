@@ -23,6 +23,8 @@ import cmu.cconfs.model.parseModel.Session_Timeslot;
 import cmu.cconfs.model.parseModel.Timeslot;
 import cmu.cconfs.model.parseModel.Version;
 import cmu.cconfs.utils.data.DataProvider;
+import cmu.cconfs.utils.data.RoomDataProvider;
+import cmu.cconfs.utils.data.RoomProvider;
 import cmu.cconfs.utils.data.UnityDataProvider;
 
 /**
@@ -32,13 +34,21 @@ public class CConfsApplication extends Application {
     public static final String TODO_GROUP_NAME = "ALL_TODOS";
 
     private static DataProvider dataProvider;
+    private static RoomProvider roomProvider;
 
     public void setDataProvider(DataProvider dataProvider) {
         this.dataProvider = dataProvider;
     }
 
+    public void setRoomProvider(RoomProvider roomProvider) {
+        this.roomProvider = roomProvider;
+    }
+
     public UnityDataProvider getUnityDataProvider(int dateIndex) {
         return dataProvider.getUnityDataProvider(dateIndex);
+    }
+    public RoomDataProvider getRoomDataProvider(int roomIndex) {
+        return roomProvider.getRoomDataProvider(roomIndex);
     }
 
 //    instant message

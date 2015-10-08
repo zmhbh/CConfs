@@ -39,6 +39,14 @@ public class Session_Room extends ParseObject {
     public void setSelected(int selected) {
         put("selected", selected);
     }
+    public String getSessionTitle() {
+        return getString("session_title");
+    }
+    public String getValue() {
+        return getString("value");
+    }
+
+
 
     public int getSelected() {
         return getInt("selected");
@@ -50,6 +58,9 @@ public class Session_Room extends ParseObject {
 
     public int getSessionId() {
         return getInt("session_id");
+    }
+    public String getTimeslot() {
+        return getString("timeslot");
     }
 
     public static ParseQuery<Session_Room> getQuery() {

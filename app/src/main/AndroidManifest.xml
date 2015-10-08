@@ -145,6 +145,8 @@
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize|stateVisible">
         </activity>
+=======
+>>>>>>> finish room schedule
 
         <!-- 注册 -->
         <activity
@@ -410,6 +412,8 @@
 
         <service android:name="com.parse.PushService" />
 
+=======
+>>>>>>> finish room schedule
         <receiver android:name="com.parse.ParseBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -435,6 +439,7 @@
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
                 <!-- IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
+
                 <category android:name="cmu.cconfs" />
             </intent-filter>
         </receiver>
@@ -443,8 +448,10 @@
             android:name="com.parse.push.notification_icon"
             android:resource="@drawable/ic_alarm_on_black_48dp" />
 
-
-
+        <activity
+            android:name=".RoomScheduleActivity"
+            android:label="@string/title_activity_room_schedule" >
+        </activity>
 
     </application>
 
