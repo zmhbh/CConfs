@@ -16,6 +16,7 @@ import cmu.cconfs.instantMessage.IMHXSDKHelper;
 import cmu.cconfs.model.Todo;
 import cmu.cconfs.model.parseModel.Message;
 import cmu.cconfs.model.parseModel.Paper;
+import cmu.cconfs.model.parseModel.Photo;
 import cmu.cconfs.model.parseModel.Program;
 import cmu.cconfs.model.parseModel.Room;
 import cmu.cconfs.model.parseModel.Session_Room;
@@ -84,6 +85,7 @@ public static Context applicationContext;
         ParseObject.registerSubclass(Timeslot.class);
         ParseObject.registerSubclass(Version.class);
         ParseObject.registerSubclass(Message.class);
+        ParseObject.registerSubclass(Photo.class);
 
         // enable the Local Datastore
         Parse.enableLocalDatastore(getApplicationContext());
@@ -94,6 +96,7 @@ public static Context applicationContext;
 
         ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();
+        defaultACL.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);
 
 //        instant message

@@ -23,6 +23,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <!--
   IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
@@ -33,6 +34,8 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="cmu.cconfs.permission.C2D_MESSAGE" />
+
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:name=".CConfsApplication"
@@ -123,6 +126,13 @@
         <activity
             android:name=".ScheduleActivity"
             android:label="@string/title_activity_schedule" />
+            android:label="@string/title_activity_schedule"/>
+        <activity
+            android:name=".ImageDetailsActivity"
+            android:label="ImageDetailsActivity"/>
+        <activity
+            android:name=".ImageGridViewActivity"
+            android:label="ImageGridViewActivity"/>
 
         <!--instant message-->
         <activity
@@ -145,8 +155,7 @@
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize|stateVisible">
         </activity>
-=======
->>>>>>> finish room schedule
+
 
         <!-- 注册 -->
         <activity
@@ -412,8 +421,6 @@
 
         <service android:name="com.parse.PushService" />
 
-=======
->>>>>>> finish room schedule
         <receiver android:name="com.parse.ParseBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
