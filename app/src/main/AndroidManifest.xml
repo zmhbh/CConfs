@@ -23,6 +23,14 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
 
     <!--
   IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
@@ -35,11 +43,13 @@
     <uses-permission android:name="cmu.cconfs.permission.C2D_MESSAGE" />
 
     <application
+
         android:name=".CConfsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        >
 
         <!-- configuration of easemob appkey -->
         <meta-data
@@ -145,8 +155,6 @@
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize|stateVisible">
         </activity>
-=======
->>>>>>> finish room schedule
 
         <!-- 注册 -->
         <activity
@@ -361,13 +369,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden"
-            ></activity>
+            />
         <!-- user profile -->
         <activity
             android:name=".instantMessage.activities.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            ></activity>
+            />
 
         <!-- 开机自启动服务 -->
         <receiver android:name="com.easemob.chat.StartServiceReceiver" >
@@ -386,7 +394,7 @@
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="com.easemob.chatuidemo" />
+                <category android:name="cmu.cconfs.instantMessage" />
             </intent-filter>
         </receiver>
 
@@ -399,7 +407,7 @@
             android:exported="false">
             <intent-filter >
                 <action android:name="com.easemob.sdk.push"/>
-                <category android:name="com.easemob.chatuidemo"/>
+                <category android:name="cmu.cconfs.instantMessage"/>
             </intent-filter>
         </receiver>
         <!-- gcm end -->
@@ -412,8 +420,6 @@
 
         <service android:name="com.parse.PushService" />
 
-=======
->>>>>>> finish room schedule
         <receiver android:name="com.parse.ParseBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
