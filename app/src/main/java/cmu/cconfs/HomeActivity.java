@@ -92,7 +92,8 @@ public class HomeActivity extends AppCompatActivity {
 
                     //Setting
                     case 8:
-
+                        intent.setClass(getApplicationContext(),LoginActivity.class);
+                        startActivity(intent);
                         break;
 
 //                        intent.setClass(getApplicationContext(),PaperActivity.class);

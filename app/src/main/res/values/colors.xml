@@ -64,5 +64,6 @@
     <color name="black_deep">#FF000000</color>
     <color name="btn_answer_pressed">#4ebcd3</color>
     <color name="btn_answer_normal">#2dafa3</color>
+    <color name="button_color">#24C163</color>
 
 </resources>

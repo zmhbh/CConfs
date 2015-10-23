@@ -396,4 +396,19 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="sign_up">Sign up</string>
+    <string name="username_hint">username</string>
+    <string name="password_hint">password</string>
+    <string name="email_hint">e-mail</string>
+    <string name="sign_up_button_label">sign up</string>
+    <string name="password_confirm_hint">conform password</string>
+    <string name="title_activity_login">Login</string>
+    <string name="login_button_label">log in</string>
+    <string name="login_label">login</string>
+    <string name="sign_up_text">Don\'t have an account yet? sign up here</string>
+    <string name="title_activity_reset_password">ResetPasswordActivity</string>
+    <string name="reset_pwd">Reset Password</string>
+    <string name="reset_label">Confirm</string>
+    <string name="reset_password_text">Forget your password? click here to reset</string>
 </resources>

@@ -95,6 +95,7 @@ public static Context applicationContext;
         ParsePush.subscribeInBackground("CConfs");
 
         ParseUser.enableAutomaticUser();
+        ParseUser.enableRevocableSessionInBackground();
         ParseACL defaultACL = new ParseACL();
         defaultACL.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);

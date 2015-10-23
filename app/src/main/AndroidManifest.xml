@@ -77,6 +77,7 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="3ecea51f560650b1ed8a4b99808f52e8" />
@@ -142,12 +143,12 @@
             android:name=".ImageGridViewActivity"
             android:label="ImageGridViewActivity"/>
 
-        <!--instant message-->
+        <!-- instant message -->
         <activity
             android:name=".IMActivity"
             android:label="@string/title_activity_im"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide">
+            android:theme="@style/horizontal_slide" >
         </activity>
         <activity
             android:name=".instantMessage.activities.IMMainActivity"
@@ -161,7 +162,7 @@
             android:name=".instantMessage.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustResize|stateVisible">
+            android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         
 
@@ -170,7 +171,7 @@
             android:name=".instantMessage.activities.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustResize|stateVisible">
+            android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <!-- 聊天页面 -->
         <activity
@@ -184,8 +185,8 @@
         <activity
             android:name=".instantMessage.activities.AddContactActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible"
-            android:theme="@style/horizontal_slide" >
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateVisible" >
         </activity>
         <!-- 群组详情 -->
         <activity
@@ -200,7 +201,6 @@
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" >
         </activity>
-
         <activity
             android:name=".instantMessage.activities.ChatRoomActivity"
             android:screenOrientation="portrait"
@@ -292,7 +292,6 @@
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" >
         </activity>
-
         <activity
             android:name=".instantMessage.activities.PublicChatRoomsActivity"
             android:screenOrientation="portrait"
@@ -303,16 +302,16 @@
         <!-- 语音通话 -->
         <activity
             android:name=".instantMessage.activities.VoiceCallActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/nornal_style" >
         </activity>
         <!-- 视频通话 -->
         <activity
             android:name=".instantMessage.activities.VideoCallActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" >
         </activity>
         <!-- 群聊简单信息 -->
@@ -377,14 +376,12 @@
             android:name=".instantMessage.activities.RobotsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            ></activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- user profile -->
         <activity
             android:name=".instantMessage.activities.UserProfileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            ></activity>
+            android:theme="@style/horizontal_slide" />
 
         <!-- 开机自启动服务 -->
         <receiver android:name="com.easemob.chat.StartServiceReceiver" >
@@ -403,11 +400,14 @@
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="cmu.cconfs.instantMessage" />
+
             </intent-filter>
         </receiver>
 
-        <service android:name="com.easemob.chat.EMGCMListenerService"
+        <service
+            android:name="com.easemob.chat.EMGCMListenerService"
             android:exported="false" >
         </service>
 
@@ -417,15 +417,12 @@
             <intent-filter >
                 <action android:name="com.easemob.sdk.push"/>
                 <category android:name="cmu.cconfs.instantMessage"/>
+
             </intent-filter>
         </receiver>
         <!-- gcm end -->
 
-        <!--instant message end-->
-
-
-        <!--/////-->
-        <!--Parse backend-->
+        <!-- Parse backend -->
 
         <service android:name="com.parse.PushService" />
 
@@ -467,7 +464,22 @@
             android:name=".RoomScheduleActivity"
             android:label="@string/title_activity_room_schedule" >
         </activity>
-
+        <activity
+            android:name=".SignUpActivity"
+            android:label="@string/title_activity_sign_up" >
+        </activity>
+        <activity
+            android:name=".Login"
+            android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name=".utils.ResetPasswordActivity"
+            android:label="@string/title_activity_reset_password" >
+        </activity>
     </application>
 
 </manifest>
