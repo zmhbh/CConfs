@@ -31,7 +31,6 @@
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-
     <!--
   IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
   to match your app's package name + ".permission.C2D_MESSAGE".
@@ -45,13 +44,11 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <application
-
         android:name=".CConfsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        >
+        android:theme="@style/AppTheme" >
 
         <!-- configuration of easemob appkey -->
         <meta-data
@@ -135,13 +132,13 @@
             android:label="@string/title_activity_about" />
         <activity
             android:name=".ScheduleActivity"
-            android:label="@string/title_activity_schedule"/>
+            android:label="@string/title_activity_schedule" />
         <activity
             android:name=".ImageDetailsActivity"
-            android:label="ImageDetailsActivity"/>
+            android:label="ImageDetailsActivity" />
         <activity
             android:name=".ImageGridViewActivity"
-            android:label="ImageGridViewActivity"/>
+            android:label="ImageGridViewActivity" />
 
         <!-- instant message -->
         <activity
@@ -164,7 +161,6 @@
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
-        
 
         <!-- 注册 -->
         <activity
@@ -402,7 +398,6 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
                 <category android:name="cmu.cconfs.instantMessage" />
-
             </intent-filter>
         </receiver>
 
@@ -412,15 +407,16 @@
         </service>
 
         <receiver
-            android:name="cmu.cconfs.instantMessage.receiver.GCMPushBroadCast"
-            android:exported="false">
-            <intent-filter >
-                <action android:name="com.easemob.sdk.push"/>
-                <category android:name="cmu.cconfs.instantMessage"/>
+            android:name=".instantMessage.receiver.GCMPushBroadCast"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.easemob.sdk.push" />
 
+                <category android:name="cmu.cconfs.instantMessage" />
             </intent-filter>
         </receiver>
         <!-- gcm end -->
+
 
         <!-- Parse backend -->
 
@@ -479,6 +475,10 @@
         <activity
             android:name=".utils.ResetPasswordActivity"
             android:label="@string/title_activity_reset_password" >
+        </activity>
+        <activity
+            android:name=".utils.UserActivity"
+            android:label="@string/title_activity_user" >
         </activity>
     </application>
 
