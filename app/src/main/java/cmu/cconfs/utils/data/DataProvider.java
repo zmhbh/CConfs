@@ -21,6 +21,7 @@ public class DataProvider {
     private List<UnityDataProvider> programsData;
 
     public UnityDataProvider getUnityDataProvider(int dateIndex) {
+        Log.e("date:", dateIndex+"");
         return programsData.get(dateIndex);
     }
 
@@ -73,8 +74,19 @@ public class DataProvider {
                 for (int k = 0; k < sessionResults.size(); k++) {
                     final long childId = group.generateNewChildId();
                     Session_Timeslot sessionResult = sessionResults.get(k);
-                    children.add(new UnityDataProvider.ConcreteChildData(childId, sessionResult));
+                    if(sessionResult.getSessionTitle()!= null && sessionResult.getSessionTitle().length()>0) {
+//                        Log.e("Session_title", sessionResult.getSessionTitle());
+//                        Log.e("val:", sessionResult.getValue());
+//                        Log.e("pp:", sessionResult.getPapers());
+//                        Log.e("val:", sessionResult.getValue());
+
+                        children.add(new UnityDataProvider.ConcreteChildData(childId, sessionResult));
+                    }
+
                 }
+                Log.e("XXXX!!!!@@@@@@@: ", "children.size: " + children.size());
+                if(children.size() != 0)
+
                 list.add(new Pair<UnityDataProvider.ConcreteGroupData, List<UnityDataProvider.ConcreteChildData>>(group, children));
 
             }

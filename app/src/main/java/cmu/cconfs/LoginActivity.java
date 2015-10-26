@@ -1,7 +1,9 @@
 package cmu.cconfs;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,12 +17,14 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import cmu.cconfs.utils.PreferencesManager;
 import cmu.cconfs.utils.ResetPasswordActivity;
 
 public class LoginActivity extends AppCompatActivity {
     protected Button mLoginButton;
     protected TextView mSignUpTextView;
     protected TextView mResetPasswordTextView;
+    protected PreferencesManager mPreferencesManager;
 
     EditText mUsername;
     EditText mPassword;
@@ -47,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        mPreferencesManager = new PreferencesManager(this);
 
         mLoginButton = (Button) findViewById(R.id.loginButton);
         mUsername = (EditText) findViewById(R.id.usernameField);
@@ -73,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),
                                         "You have been successfully logged in!",
                                         Toast.LENGTH_LONG).show();
+                                mPreferencesManager.writeBooleanPreference("LoggedIn", true);
                                 finish();
                                 // Hooray! The user is logged in.
                             } else {

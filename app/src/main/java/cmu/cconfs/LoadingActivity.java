@@ -9,7 +9,6 @@ import com.github.jlmd.animatedcircleloadingview.AnimatedCircleLoadingView;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import cmu.cconfs.model.CheckVersion;
 import cmu.cconfs.model.parseModel.Paper;

@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion '23.0.0 rc3'
+    compileSdkVersion 22
+    buildToolsVersion '22.0.1'
     defaultConfig {
         applicationId "cmu.cconfs"
         minSdkVersion 15
@@ -25,16 +25,16 @@ android {
         javaMaxHeapSize "2048M"
     }
     sourceSets {
-        main{
+        main {
             jni.srcDirs = []
-            jniLibs.srcDirs=['src/main/jniLibs']
+            jniLibs.srcDirs = ['src/main/jniLibs']
         }
 
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.android.support:cardview-v7:22.2.1'

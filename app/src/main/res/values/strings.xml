@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CConfs</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="preference_file_key">pf_key</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_home">HomeActivity</string>
 
@@ -411,4 +411,7 @@
     <string name="reset_pwd">Reset Password</string>
     <string name="reset_label">Confirm</string>
     <string name="reset_password_text">Forget your password? click here to reset</string>
+    <string name="title_activity_user">UserActivity</string>
+    <string name="account">Account Setting</string>
+    <string name="sign_out_label">Sign out</string>
 </resources>

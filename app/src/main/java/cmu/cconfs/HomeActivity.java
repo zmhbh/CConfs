@@ -1,6 +1,8 @@
 package cmu.cconfs;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +11,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.parse.ParseUser;
+
 import org.askerov.dynamicgrid.DynamicGridView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import cmu.cconfs.adapter.HomeGridDynamicAdapter;
+import cmu.cconfs.utils.PreferencesManager;
+import cmu.cconfs.utils.UserActivity;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -22,12 +28,14 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG = HomeActivity.class.getName();
     private DynamicGridView gridView;
     private String[] titles = {"Agenda", "My Schedule", "Room Schedule","Map", "Floor Guide", "Sponsor", "Notification", "About", "Setting", "Chat"};
-
+    PreferencesManager mPreferencesManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        mPreferencesManager = new PreferencesManager(this);
+
 
         gridView = (DynamicGridView) findViewById(R.id.dynamic_grid);
         gridView.setAdapter(new HomeGridDynamicAdapter(this
@@ -37,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(HomeActivity.this, parent.getAdapter().getItem(position).toString(),
+                Toast .makeText(HomeActivity.this, parent.getAdapter().getItem(position).toString(),
                         Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent();
@@ -92,8 +100,16 @@ public class HomeActivity extends AppCompatActivity {
 
                     //Setting
                     case 8:
-                        intent.setClass(getApplicationContext(),LoginActivity.class);
-                        startActivity(intent);
+                        boolean loggedIn = mPreferencesManager.getBooleanPreference("LoggedIn",false);
+                        Toast .makeText(HomeActivity.this, loggedIn + "",
+                                Toast.LENGTH_SHORT).show();
+                        if(loggedIn == false) {
+                            intent.setClass(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                        } else {
+                            intent.setClass(getApplicationContext(), UserActivity.class);
+                            startActivity(intent);
+                        }
                         break;
 
 //                        intent.setClass(getApplicationContext(),PaperActivity.class);

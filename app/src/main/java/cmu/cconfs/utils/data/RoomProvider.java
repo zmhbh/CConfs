@@ -7,6 +7,8 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import cmu.cconfs.model.parseModel.Session_Room;
@@ -70,12 +72,30 @@ public class RoomProvider {
                     e.printStackTrace();
                 }
 
+                HashMap<String,HashSet<String>> record = new HashMap<String,HashSet<String>>();
                 for (int k = 0; k < sessionResults.size(); k++) {
                     final long childId = group.generateNewChildId();
                     Session_Room sessionResult = sessionResults.get(k);
-                    children.add(new RoomDataProvider.ConcreteChildData(childId, sessionResult));
+                    if(sessionResult.getSessionTitle() != null && sessionResult.getSessionTitle().length()>0) {
+                        if (record.containsKey(sessionResult.getTimeslot())){
+                            if (record.get(sessionResult.getTimeslot()).contains(sessionResult.getSessionTitle()))
+                                continue;
+                            else {
+                                record.get(sessionResult.getTimeslot()).add(sessionResult.getSessionTitle());
+                                children.add(new RoomDataProvider.ConcreteChildData(childId, sessionResult));
+                            }
+                        }
+                        else {
+                            HashSet<String> set = new HashSet<String>();
+                            set.add(sessionResult.getSessionTitle());
+                            record.put(sessionResult.getTimeslot(),set);
+                            children.add(new RoomDataProvider.ConcreteChildData(childId, sessionResult));
+                        }
+                    }
                 }
-                list.add(new Pair<RoomDataProvider.ConcreteGroupData, List<RoomDataProvider.ConcreteChildData>>(group, children));
+                if(children.size() != 0)
+
+                    list.add(new Pair<RoomDataProvider.ConcreteGroupData, List<RoomDataProvider.ConcreteChildData>>(group, children));
 
             }
 
