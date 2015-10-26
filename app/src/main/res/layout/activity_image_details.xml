@@ -26,12 +26,14 @@
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:text="Anonymous"
         android:id="@+id/photoUploader"
         android:textSize="11pt"
+        android:textColor="@color/red"
         android:layout_alignBottom="@+id/sharebutton"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

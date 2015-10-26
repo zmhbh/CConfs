@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -52,6 +53,7 @@ public class ImageDetailsActivity extends AppCompatActivity {
             bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             shareButton.setVisibility(View.INVISIBLE);
             publisherTextView.setText(incomeIntent.getStringExtra("Publisher"));
+            publisherTextView.setVisibility(View.VISIBLE);
         } else {
             String imagePath = incomeIntent.getStringExtra("image");
             BitmapFactory.Options options = new BitmapFactory.Options();
