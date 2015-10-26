@@ -30,6 +30,7 @@ public class ImageGridViewActivity extends BaseActivity {
 
     private ImageGridViewAdapter mGridAdapter;
     private List<Bitmap> remotePhotosList;
+    private List<String> remotePhotosPublisher;
     private ProgressBar mProgressBar;
     private String sessionKey;
 
@@ -75,6 +76,7 @@ public class ImageGridViewActivity extends BaseActivity {
                     ((Bitmap) item).compress(Bitmap.CompressFormat.PNG, 0, bos);
                     byte[] scaledData = bos.toByteArray();
                     intent.putExtra("byteArray", scaledData);
+                    intent.putExtra("Publisher",remotePhotosPublisher.get(position));
                 }
 
                 //Start details activity
@@ -93,12 +95,14 @@ public class ImageGridViewActivity extends BaseActivity {
                 ParseQuery<Photo> query = ParseQuery.getQuery(Photo.class);
                 query.whereEqualTo("sessionKey", sessionKey);
                 List<Photo> photos = query.find();
+                remotePhotosPublisher = new ArrayList<>();
                 for (Photo photo : photos) {
                     ParseFile photoFile = photo.getPhotoFile();
                     byte[] response = photoFile.getData();
                     Bitmap bitmap = BitmapFactory.decodeByteArray(response, 0, response.length);
 
                     remotePhotosList.add(bitmap);
+                    remotePhotosPublisher.add(photo.getPublisher());
                 }
                 result = 1;
                 return result;

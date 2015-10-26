@@ -13,16 +13,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import cmu.cconfs.model.parseModel.Photo;
+import cmu.cconfs.utils.PreferencesManager;
 
 /**
  * Created by mangobin on 15/10/14.
@@ -31,13 +34,16 @@ public class ImageDetailsActivity extends AppCompatActivity {
 
     private String sessionKey;
     private Bitmap bitmap;
+    private PreferencesManager mPreferencesManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_details);
+        mPreferencesManager = new PreferencesManager(this);
         ImageView imageView = (ImageView) findViewById(R.id.grid_item_image);
-        Button shareButton = (Button)findViewById(R.id.sharebutton);
+        TextView publisherTextView = (TextView) findViewById(R.id.photoUploader);
+        Button shareButton = (Button) findViewById(R.id.sharebutton);
         Intent incomeIntent = getIntent();
         sessionKey = incomeIntent.getStringExtra("sessionKey");
 
@@ -45,11 +51,13 @@ public class ImageDetailsActivity extends AppCompatActivity {
             byte[] bytes = incomeIntent.getByteArrayExtra("byteArray");
             bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             shareButton.setVisibility(View.INVISIBLE);
+            publisherTextView.setText(incomeIntent.getStringExtra("Publisher"));
         } else {
             String imagePath = incomeIntent.getStringExtra("image");
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 8;
             bitmap = BitmapFactory.decodeFile(imagePath, options);
+            publisherTextView.setVisibility(View.INVISIBLE);
         }
 
         imageView.setImageBitmap(bitmap);
@@ -58,25 +66,33 @@ public class ImageDetailsActivity extends AppCompatActivity {
     }
 
     public void didTapShareButton(View view) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
-        byte[] scaledData = bos.toByteArray();
+        boolean loggedIn = mPreferencesManager.getBooleanPreference("LoggedIn", false);
 
-        ParseFile file = new ParseFile("photo.png", scaledData);
-        file.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Upload Success!", Toast.LENGTH_LONG).show();
+        if (!loggedIn) {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        } else {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+            byte[] scaledData = bos.toByteArray();
+
+            ParseFile file = new ParseFile("photo.png", scaledData);
+            file.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Upload Success!", Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
-        });
-        Photo photo = new Photo();
-        photo.setSessionKey(sessionKey);
-        photo.setPhotoFile(file);
-        photo.saveInBackground();
+            });
+            Photo photo = new Photo();
+            photo.setSessionKey(sessionKey);
+            photo.setPhotoFile(file);
+            photo.setPublisher(ParseUser.getCurrentUser().getUsername());
+            photo.saveInBackground();
+        }
+
     }
 
     public static Uri getImageContentUri(Context context, File imageFile) {

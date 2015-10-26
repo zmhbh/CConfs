@@ -36,6 +36,14 @@ public class Photo extends ParseObject {
         put("photoName", file);
     }
 
+    public void setPublisher(String publisher) {
+        put("publisher", publisher);
+    }
+
+    public String getPublisher() {
+        return getString("publisher");
+    }
+
     public List<Photo> getPhotoQueryBySessionKey(String key) {
         ParseQuery<Photo> query = ParseQuery.getQuery(Photo.class);
         query.whereEqualTo("sessionKey", key);
