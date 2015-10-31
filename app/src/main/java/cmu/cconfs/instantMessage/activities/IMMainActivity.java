@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import cmu.cconfs.HomeActivity;
 import cmu.cconfs.R;
 import cmu.cconfs.instantMessage.Constant;
 import cmu.cconfs.instantMessage.IMHXSDKHelper;
@@ -58,7 +59,7 @@ import cmu.cconfs.instantMessage.utils.CommonUtils;
 
 public class IMMainActivity extends IMBaseActivity implements EMEventListener {
 
-    protected static final String TAG = "MainActivity";
+    protected static final String TAG = "IMMainActivity";
     // 未读消息textview
     private TextView unreadLabel;
     // 未读通讯录textview
@@ -154,13 +155,13 @@ public class IMMainActivity extends IMBaseActivity implements EMEventListener {
 
 
     static void asyncFetchGroupsFromServer(){
-        HXSDKHelper.getInstance().asyncFetchGroupsFromServer(new EMCallBack(){
+        HXSDKHelper.getInstance().asyncFetchGroupsFromServer(new EMCallBack() {
 
             @Override
             public void onSuccess() {
                 HXSDKHelper.getInstance().noitifyGroupSyncListeners(true);
 
-                if(HXSDKHelper.getInstance().isContactsSyncedWithServer()){
+                if (HXSDKHelper.getInstance().isContactsSyncedWithServer()) {
                     HXSDKHelper.getInstance().notifyForRecevingEvents();
                 }
             }
@@ -179,13 +180,13 @@ public class IMMainActivity extends IMBaseActivity implements EMEventListener {
     }
 
     static void asyncFetchContactsFromServer(){
-        HXSDKHelper.getInstance().asyncFetchContactsFromServer(new EMValueCallBack<List<String>>(){
+        HXSDKHelper.getInstance().asyncFetchContactsFromServer(new EMValueCallBack<List<String>>() {
 
             @Override
             public void onSuccess(List<String> usernames) {
                 Context context = HXSDKHelper.getInstance().getAppContext();
 
-                System.out.println("----------------"+usernames.toString());
+                System.out.println("----------------" + usernames.toString());
                 EMLog.d("roster", "contacts size: " + usernames.size());
                 Map<String, User> userlist = new HashMap<String, User>();
                 for (String username : usernames) {
@@ -226,7 +227,7 @@ public class IMMainActivity extends IMBaseActivity implements EMEventListener {
                 userlist.put(Constant.CHAT_ROBOT, robotUser);
 
                 // 存入内存
-                ((IMHXSDKHelper)HXSDKHelper.getInstance()).setContactList(userlist);
+                ((IMHXSDKHelper) HXSDKHelper.getInstance()).setContactList(userlist);
                 // 存入db
                 UserDao dao = new UserDao(context);
                 List<User> users = new ArrayList<User>(userlist.values());
@@ -234,16 +235,16 @@ public class IMMainActivity extends IMBaseActivity implements EMEventListener {
 
                 HXSDKHelper.getInstance().notifyContactsSyncListener(true);
 
-                if(HXSDKHelper.getInstance().isGroupsSyncedWithServer()){
+                if (HXSDKHelper.getInstance().isGroupsSyncedWithServer()) {
                     HXSDKHelper.getInstance().notifyForRecevingEvents();
                 }
 
-                ((IMHXSDKHelper)HXSDKHelper.getInstance()).getUserProfileManager().asyncFetchContactInfosFromServer(usernames,new EMValueCallBack<List<User>>() {
+                ((IMHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager().asyncFetchContactInfosFromServer(usernames, new EMValueCallBack<List<User>>() {
 
                     @Override
                     public void onSuccess(List<User> uList) {
-                        ((IMHXSDKHelper)HXSDKHelper.getInstance()).updateContactList(uList);
-                        ((IMHXSDKHelper)HXSDKHelper.getInstance()).getUserProfileManager().notifyContactInfosSyncListener(true);
+                        ((IMHXSDKHelper) HXSDKHelper.getInstance()).updateContactList(uList);
+                        ((IMHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager().notifyContactInfosSyncListener(true);
                     }
 
                     @Override
@@ -261,7 +262,7 @@ public class IMMainActivity extends IMBaseActivity implements EMEventListener {
     }
 
     static void asyncFetchBlackListFromServer(){
-        HXSDKHelper.getInstance().asyncFetchBlackListFromServer(new EMValueCallBack<List<String>>(){
+        HXSDKHelper.getInstance().asyncFetchBlackListFromServer(new EMValueCallBack<List<String>>() {
 
             @Override
             public void onSuccess(List<String> value) {
@@ -400,7 +401,9 @@ public class IMMainActivity extends IMBaseActivity implements EMEventListener {
 
     @Override
     public void back(View view) {
+        Toast.makeText(getApplicationContext(), "back", Toast.LENGTH_SHORT).show();
         super.back(view);
+
     }
 
     @Override
@@ -909,6 +912,9 @@ public class IMMainActivity extends IMBaseActivity implements EMEventListener {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             moveTaskToBack(false);
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+            finish();
             return true;
         }
         return super.onKeyDown(keyCode, event);

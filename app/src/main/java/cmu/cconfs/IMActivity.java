@@ -16,6 +16,7 @@ import com.easemob.chat.EMGroupManager;
 
 import cmu.cconfs.instantMessage.IMHXSDKHelper;
 import cmu.cconfs.instantMessage.activities.IMBaseActivity;
+import cmu.cconfs.instantMessage.activities.IMMainActivity;
 import cmu.cconfs.instantMessage.activities.LoginActivity;
 
 public class IMActivity extends IMBaseActivity {
@@ -61,7 +62,7 @@ public class IMActivity extends IMBaseActivity {
                         }
                     }
                     //进入主页面
-                    startActivity(new Intent(IMActivity.this, MainActivity.class));
+                    startActivity(new Intent(IMActivity.this, IMMainActivity.class));
                     finish();
                 }else {
                     try {
