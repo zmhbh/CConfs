@@ -69,6 +69,8 @@ public class Paper extends ParseObject {
     }
 
     public static ParseQuery<Paper> getQuery() {
-        return ParseQuery.getQuery(Paper.class);
+        ParseQuery<Paper> paperParseQuery= ParseQuery.getQuery(Paper.class);
+        paperParseQuery.setLimit(1000);
+        return paperParseQuery;
     }
 }

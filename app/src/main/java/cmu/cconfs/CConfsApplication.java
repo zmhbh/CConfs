@@ -48,12 +48,13 @@ public class CConfsApplication extends Application {
     public UnityDataProvider getUnityDataProvider(int dateIndex) {
         return dataProvider.getUnityDataProvider(dateIndex);
     }
+
     public RoomDataProvider getRoomDataProvider(int roomIndex) {
         return roomProvider.getRoomDataProvider(roomIndex);
     }
 
-//    instant message
-public static Context applicationContext;
+    //    instant message
+    public static Context applicationContext;
     private static CConfsApplication instance;
     // login user name
     public final String PREF_USERNAME = "username";
@@ -151,8 +152,8 @@ public static Context applicationContext;
     /**
      * 退出登录,清空数据
      */
-    public void logout(final boolean isGCM,final EMCallBack emCallBack) {
+    public void logout(final boolean isGCM, final EMCallBack emCallBack) {
         // 先调用sdk logout，在清理app中自己的数据
-        hxSDKHelper.logout(isGCM,emCallBack);
+        hxSDKHelper.logout(isGCM, emCallBack);
     }
 }

@@ -77,6 +77,8 @@ public class Session_Timeslot extends ParseObject {
     }
 
     public static ParseQuery<Session_Timeslot> getQuery() {
-        return ParseQuery.getQuery(Session_Timeslot.class);
+        ParseQuery<Session_Timeslot> parseQuery = ParseQuery.getQuery(Session_Timeslot.class);
+        parseQuery.setLimit(1000);
+        return parseQuery;
     }
 }
