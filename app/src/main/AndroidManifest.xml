@@ -473,11 +473,11 @@
             android:label="@string/title_activity_login" >
         </activity>
         <activity
-            android:name=".utils.ResetPasswordActivity"
+            android:name=".ResetPasswordActivity"
             android:label="@string/title_activity_reset_password" >
         </activity>
         <activity
-            android:name=".utils.UserActivity"
+            android:name=".UserActivity"
             android:label="@string/title_activity_user" >
         </activity>
     </application>
