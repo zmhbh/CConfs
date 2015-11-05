@@ -64,6 +64,8 @@ public class Session_Room extends ParseObject {
     }
 
     public static ParseQuery<Session_Room> getQuery() {
-        return ParseQuery.getQuery(Session_Room.class);
+        ParseQuery<Session_Room> parseQuery = ParseQuery.getQuery(Session_Room.class);
+        parseQuery.setLimit(1000);
+        return parseQuery;
     }
 }
