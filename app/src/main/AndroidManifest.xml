@@ -70,13 +70,14 @@
         </receiver>
 
         <!-- configuration of baidu maps api -->
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="DpEDKx17DhY1wB5iZHreiB1H" />
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="3ecea51f560650b1ed8a4b99808f52e8" />
         <!-- configuration of google maps api -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

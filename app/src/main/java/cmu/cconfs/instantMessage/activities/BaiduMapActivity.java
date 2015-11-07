@@ -96,7 +96,7 @@ public class BaiduMapActivity extends IMBaseActivity {
 		instance = this;
 		//在使用SDK各组件之前初始化context信息，传入ApplicationContext  
         //注意该方法要再setContentView方法之前实现  
-        SDKInitializer.initialize(getApplicationContext());
+        SDKInitializer.initialize(getApplicationContext());  
 		setContentView(R.layout.activity_baidumap);
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		sendButton = (Button) findViewById(R.id.btn_location_send);
@@ -104,7 +104,7 @@ public class BaiduMapActivity extends IMBaseActivity {
 		double latitude = intent.getDoubleExtra("latitude", 0);
 		mCurrentMode = LocationMode.NORMAL;
 		mBaiduMap = mMapView.getMap();
-		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(1.5f);  //15
+		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(15.0f);
 		mBaiduMap.setMapStatus(msu);
 		initMapView();
 		if (latitude == 0) {
@@ -140,7 +140,7 @@ public class BaiduMapActivity extends IMBaseActivity {
 				.fromResource(R.drawable.icon_marka))
 				.zIndex(4).draggable(true);
 		mBaiduMap.addOverlay(ooA);
-		MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(convertLatLng, 1.7f); //17
+		MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(convertLatLng, 17.0f);
 		mBaiduMap.animateMapStatus(u);
 	}
 
@@ -243,7 +243,7 @@ public class BaiduMapActivity extends IMBaseActivity {
 					.fromResource(R.drawable.icon_marka))
 					.zIndex(4).draggable(true);
 			mBaiduMap.addOverlay(ooA);
-			MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(convertLatLng, 1.7f);  //17
+			MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(convertLatLng, 17.0f);
 			mBaiduMap.animateMapStatus(u);
 		}
 
@@ -265,12 +265,9 @@ public class BaiduMapActivity extends IMBaseActivity {
 
 	public void sendLocation(View view) {
 		Intent intent = this.getIntent();
-//		intent.putExtra("latitude", lastLocation.getLatitude());
-//		intent.putExtra("longitude", lastLocation.getLongitude());
-//		intent.putExtra("address", lastLocation.getAddrStr());
-		intent.putExtra("latitude", 31.1433);
-		intent.putExtra("longitude", 121.8053);
-		intent.putExtra("address", "Shanghai Pudong International Airport");
+		intent.putExtra("latitude", lastLocation.getLatitude());
+		intent.putExtra("longitude", lastLocation.getLongitude());
+		intent.putExtra("address", lastLocation.getAddrStr());
 		this.setResult(RESULT_OK, intent);
 		finish();
 		overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);

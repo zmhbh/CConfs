@@ -3,7 +3,6 @@ package cmu.cconfs;
 import android.app.Application;
 import android.content.Context;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.easemob.EMCallBack;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.parse.Parse;
@@ -105,7 +104,6 @@ public static Context applicationContext;
         applicationContext = this;
         instance = this;
         hxSDKHelper.onInit(applicationContext);
-    //    SDKInitializer.initialize(getApplicationContext());
     }
 
     public static CConfsApplication getInstance() {
