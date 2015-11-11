@@ -1,16 +1,29 @@
 package cmu.cconfs.adapter;
 
+import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.os.SystemClock;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
 import com.rey.material.widget.CheckBox;
+
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.TimeZone;
 
 import cmu.cconfs.R;
 import cmu.cconfs.SessionActivity;
@@ -24,12 +37,19 @@ import cmu.cconfs.utils.widget.ExpandableItemIndicator;
 public class ExpandableItemAdapter extends AbstractExpandableItemAdapter<ExpandableItemAdapter.MyGroupViewHolder, ExpandableItemAdapter.MyChildViewHolder> {
 
     private UnityDataProvider unityDataProvider;
+    HashMap<Integer, String> map = new HashMap<Integer, String>();
 
     public ExpandableItemAdapter(UnityDataProvider unityDataProvider) {
         this.unityDataProvider = unityDataProvider;
         // ExpandableItemAdapter requires stable ID, and also
         // have to implement the getGroupItemId()/getChildItemId() methods appropriately.
         setHasStableIds(true);
+        map.put(252, "7-2");
+        map.put(201, "7-1");
+        map.put(151, "6-30");
+        map.put(103, "6-29");
+        map.put(63, "6-28");
+        map.put(0, "6-27");
     }
 
     @Override
@@ -174,6 +194,38 @@ public class ExpandableItemAdapter extends AbstractExpandableItemAdapter<Expanda
                 CheckBox view = (CheckBox) v;
                 if (view.isChecked()) {
                     ((UnityDataProvider.ConcreteChildData) view.getTag()).setSelected(true);
+                    if(childItem.getSessionId() >= 252){
+                        scheduleNotification(v.getContext(),
+                                getNotification("Next session starts in 10 minutes at " +
+                                        childItem.getSessionRoom(), v.getContext()),
+                                map.get(252) + "-" + unityDataProvider.getGroupItem(groupPosition - 1).getText());
+                    }
+                    else if(childItem.getSessionId() >= 201){
+                        scheduleNotification(v.getContext(),
+                                getNotification("Next session starts in 10 minutes at " +
+                                        childItem.getSessionRoom(), v.getContext()),
+                                map.get(201) + "-" + unityDataProvider.getGroupItem(groupPosition - 1).getText());
+                    }else if(childItem.getSessionId() >= 151){
+                        scheduleNotification(v.getContext(),
+                                getNotification("Next session starts in 10 minutes at " +
+                                        childItem.getSessionRoom(), v.getContext()),
+                                map.get(151) + "-" + unityDataProvider.getGroupItem(groupPosition - 1).getText());
+                    }else if(childItem.getSessionId() >= 103){
+                        scheduleNotification(v.getContext(),
+                                getNotification("Next session starts in 10 minutes at " +
+                                        childItem.getSessionRoom(), v.getContext()),
+                                map.get(103) + "-" + unityDataProvider.getGroupItem(groupPosition - 1).getText());
+                    }else if(childItem.getSessionId() >= 63){
+                        scheduleNotification(v.getContext(),
+                                getNotification("Next session starts in 10 minutes at " +
+                                        childItem.getSessionRoom(), v.getContext()),
+                                map.get(63) + "-" + unityDataProvider.getGroupItem(groupPosition - 1).getText());
+                    }else{
+                        scheduleNotification(v.getContext(),
+                                getNotification("Next session starts in 10 minutes at " +
+                                        childItem.getSessionRoom(), v.getContext()),
+                                map.get(0) + "-" + unityDataProvider.getGroupItem(groupPosition - 1).getText());
+                    }
                 } else {
                     ((UnityDataProvider.ConcreteChildData) view.getTag()).setSelected(false);
                 }
@@ -240,5 +292,53 @@ public class ExpandableItemAdapter extends AbstractExpandableItemAdapter<Expanda
             secondTextView = (TextView) v.findViewById(android.R.id.text2);
             checkBox = (CheckBox) v.findViewById(R.id.switches_cb1);
         }
+    }
+    private void scheduleNotification(Context context, Notification notification, String time) {
+        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, 0);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(TimeZone.getDefault());
+        calendar.set(Calendar.MONTH, Integer.parseInt(time.split("-")[0]) - 1);
+        calendar.set(Calendar.YEAR, 2015);
+        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(time.split("-")[1]));
+
+        if(Integer.parseInt(time.split("-")[2].split(":")[1]) < 10) {
+            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time.split("-")[2].split(":")[0]) - 1);
+            calendar.set(Calendar.MINUTE, 50);
+            if(Integer.parseInt(time.split("-")[2].split(":")[0]) - 1 >= 12)
+                calendar.set(Calendar.AM_PM,Calendar.PM);
+            else
+                calendar.set(Calendar.AM_PM,Calendar.AM);
+        }
+        else {
+            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time.split("-")[2].split(":")[0]));
+            calendar.set(Calendar.MINUTE, Integer.parseInt(time.split("-")[2].split(":")[1]) - 10);
+            if(Integer.parseInt(time.split("-")[2].split(":")[0]) >= 12)
+                calendar.set(Calendar.AM_PM,Calendar.PM);
+            else
+                calendar.set(Calendar.AM_PM,Calendar.AM);
+        }
+        calendar.set(Calendar.SECOND, 0);
+
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP,
+                calendar.getTimeInMillis(),
+                pendingIntent);
+    }
+    public static long getStampFromDate(int year, int month, int day, int hour, int minute) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day, hour, minute);
+        return calendar.getTimeInMillis();
+    }
+    private Notification getNotification(String content, Context context) {
+        Notification.Builder builder = new Notification.Builder(context);
+        builder.setContentTitle("Session Reminder");
+        builder.setContentText(content);
+        builder.setSmallIcon(R.drawable.ic_launcher);
+        return builder.build();
     }
 }

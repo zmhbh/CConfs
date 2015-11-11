@@ -480,6 +480,12 @@
             android:name=".UserActivity"
             android:label="@string/title_activity_user" >
         </activity>
+
+        <receiver
+            android:name=".adapter.NotificationPublisher"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
     </application>
 
 </manifest>
