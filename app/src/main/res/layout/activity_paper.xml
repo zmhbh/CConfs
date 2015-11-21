@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:minHeight="?attr/actionBarSize"></android.support.v7.widget.Toolbar>
+
         <View
             android:id="@+id/dropshadow"
             android:layout_width="match_parent"
@@ -25,111 +26,243 @@
             android:layout_below="@+id/toolbar"
             android:background="@drawable/toolbar_dropshadow" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <net.steamcrafted.materialiconlib.MaterialIconView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="center"
+                app:materialIcon="star_outline"
+                app:materialIconColor="@color/colorPrimary"
+                app:materialIconSize="36dp" />
+
+            <net.steamcrafted.materialiconlib.MaterialIconView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="center"
+                app:materialIcon="bell_ring_outline"
+                app:materialIconColor="@color/colorPrimary"
+                app:materialIconSize="36dp" />
+
+            <net.steamcrafted.materialiconlib.MaterialIconView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:onClick="didTapCameraButton"
+                android:scaleType="center"
+                app:materialIcon="camera"
+                app:materialIconColor="@color/colorPrimary"
+                app:materialIconSize="36dp" />
+
+            <net.steamcrafted.materialiconlib.MaterialIconView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:onClick="didTapVideoButton"
+                android:scaleType="center"
+                app:materialIcon="video"
+                app:materialIconColor="@color/colorPrimary"
+                app:materialIconSize="36dp" />
+
+            <net.steamcrafted.materialiconlib.MaterialIconView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:onClick="didTapNoteButton"
+                android:scaleType="center"
+                app:materialIcon="note_outline"
+                app:materialIconColor="@color/colorPrimary"
+                app:materialIconSize="36dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/paper_image1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/paper_image2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/paper_image3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="didTapShowAllImages"
+            android:text="Show all images" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="didTapShowAllPublicImages"
+            android:text="Show all public images" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your rating:"
+                android:paddingRight="29dp"
+                android:paddingLeft="10dp" />
+
+            <RatingBar
+                android:id="@+id/paper_local_ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Overall rating:"
+                android:paddingRight="15dp"
+                android:paddingLeft="10dp" />
+
+            <RatingBar
+                android:id="@+id/paper_public_ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:isIndicator="true"
+                android:clickable="false" />
+        </LinearLayout>
+
         <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/scrollView2"
-            android:layout_gravity="center_horizontal" >
+            android:layout_gravity="center_horizontal">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
+
+
                 <android.support.v7.widget.CardView
                     android:id="@+id/container"
-                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    app:cardCornerRadius="2dp"
-                    app:cardElevation="2dp"
                     android:layout_marginBottom="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
                     android:layout_marginTop="1dp"
+                    android:clickable="true"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="2dp"
                     app:cardPreventCornerOverlap="false"
                     app:contentPadding="5dp">
+
                     <TextView
                         android:id="@+id/paperTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="top|left"
-                        tools:ignore="RtlHardcoded"
-                        android:text="Budget Constrained Execution of Multiple Bag-of-Tasks Applications on the Cloud sfdafdsa fasasfas "
                         android:ellipsize="end"
+                        android:gravity="center_vertical|center_horizontal"
                         android:maxLines="3"
-                        android:textSize="18sp"
+                        android:text="Budget Constrained Execution of Multiple Bag-of-Tasks Applications on the Cloud sfdafdsa fasasfas "
                         android:textColor="#000000"
-                        android:gravity="center_vertical|center_horizontal" />
+                        android:textSize="18sp"
+                        tools:ignore="RtlHardcoded" />
 
                 </android.support.v7.widget.CardView>
 
                 <TextView
+                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:text="Abstract"
-                    android:id="@+id/textView2"
                     android:textColor="#000000"
                     android:textSize="16sp" />
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/abstractContainer"
-                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="2dp"
-                    app:cardElevation="2dp"
                     android:layout_marginBottom="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
                     android:layout_marginTop="1dp"
+                    android:clickable="true"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="2dp"
                     app:cardPreventCornerOverlap="false"
                     app:contentPadding="5dp">
+
                     <TextView
                         android:id="@+id/abstractContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top|left"
-                        tools:ignore="RtlHardcoded"
+                        android:gravity="fill"
                         android:text="This dissertation examines the role of newspaper editors in the political turmoil and strife that characterized late First Empire Rio de Janeiro (1827-1831). Newspaper editors and their journals helped change the political culture of late First Empire Rio de Janeiro by involving the people in the discussion of state. This change in political culture is apparent in Emperor Pedro I’s gradual loss of control over the mechanisms of power. As the newspapers became more numerous and powerful, the Emperor lost his legitimacy in the eyes of the people. To explore the role of the newspapers in the political events of the late First Empire, this dissertation analyzes all available newspapers published in Rio de Janeiro from 1827 to 1831. Newspapers and their editors were leading forces in the effort to remove power from the hands of the ruling elite and place it under the control of the people. In the process, newspapers helped change how politics operated in the constitutional monarchy of Brazil."
                         android:textSize="16sp"
 
-                        android:gravity="fill" />
+                        tools:ignore="RtlHardcoded" />
 
                 </android.support.v7.widget.CardView>
 
                 <TextView
+                    android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:text="Author"
-                    android:id="@+id/textView3"
                     android:textColor="#000000"
                     android:textSize="16sp" />
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/author"
-                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="2dp"
-                    app:cardElevation="2dp"
                     android:layout_marginBottom="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
                     android:layout_marginTop="1dp"
+                    android:clickable="true"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="2dp"
                     app:cardPreventCornerOverlap="false"
                     app:contentPadding="5dp">
+
                     <TextView
                         android:id="@+id/authorContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top|left"
-                        tools:ignore="RtlHardcoded"
+                        android:gravity="fill"
                         android:text="This dissertation examines the role of newspaper editors in the political turmoil and strife that characterized late First Empire Rio de Janeiro (1827-1831). Newspaper editors and their journals helped change the political culture of late First Empire Rio de Janeiro by involving the people in the discussion of state. This change in political culture is apparent in Emperor Pedro I’s gradual loss of control over the mechanisms of power. As the newspapers became more numerous and powerful, the Emperor lost his legitimacy in the eyes of the people. To explore the role of the newspapers in the political events of the late First Empire, this dissertation analyzes all available newspapers published in Rio de Janeiro from 1827 to 1831. Newspapers and their editors were leading forces in the effort to remove power from the hands of the ruling elite and place it under the control of the people. In the process, newspapers helped change how politics operated in the constitutional monarchy of Brazil."
                         android:textSize="16sp"
 
-                        android:gravity="fill" />
+                        tools:ignore="RtlHardcoded" />
 
                 </android.support.v7.widget.CardView>
 

@@ -54,11 +54,7 @@ public class ImageGridViewAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position) {
         if (localPhotosFilePathList == null) {
-            if (remotePhotosBitmapList == null) {
-                return null;
-            } else {
-                return remotePhotosBitmapList.get(position);
-            }
+            return remotePhotosBitmapList.get(position);
         } else {
             return localPhotosFilePathList.get(position);
         }

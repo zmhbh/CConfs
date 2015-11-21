@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -20,6 +21,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -52,6 +54,7 @@ public class SessionActivity extends BaseActivity implements ObservableScrollVie
     private int mBaseTranslationY;
     private String notesSharedPref;
     private String imageSharedPref;
+    private String sessionKey;
     private ImageView image1;
     private ImageView image2;
     private ImageView image3;
@@ -68,7 +71,7 @@ public class SessionActivity extends BaseActivity implements ObservableScrollVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session);
 
-        imageNameToImageFilePathMap = new HashMap<String, String>();
+        imageNameToImageFilePathMap = new HashMap<>();
         image1 = (ImageView) findViewById(R.id.session_image1);
         image2 = (ImageView) findViewById(R.id.session_image2);
         image3 = (ImageView) findViewById(R.id.session_image3);
@@ -78,7 +81,6 @@ public class SessionActivity extends BaseActivity implements ObservableScrollVie
         String pNames = getIntent().getStringExtra("papers");
         //populate papers
         if (pNames != null && !pNames.isEmpty() && !pNames.trim().equals("0")) {
-            pNames.trim();
             String[] paperNames = pNames.split(",");
             ParseQuery<Paper> query = Paper.getQuery();
             query.fromLocalDatastore();
@@ -96,13 +98,13 @@ public class SessionActivity extends BaseActivity implements ObservableScrollVie
         String sessionRoom = getIntent().getStringExtra("sessionRoom");
         String sessionChair = getIntent().getStringExtra("sessionChair");
 
-        notesSharedPref = sessionName + sessionChair + sessionRoom + sessionTime + "note";
-        imageSharedPref = sessionName + sessionChair + sessionRoom + sessionTime + "image";
+        sessionKey = sessionName + sessionChair + sessionRoom + sessionTime;
+        notesSharedPref = sessionKey + "note";
+        imageSharedPref = sessionKey + "image";
 
         SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
         String imageUris = settings.getString(imageSharedPref, "");
-        if (imageUris != null && !imageUris.isEmpty()) {
+        if (!imageUris.isEmpty()) {
             populateImages(imageUris);
         }
 
@@ -124,6 +126,20 @@ public class SessionActivity extends BaseActivity implements ObservableScrollVie
         ListView listView_paper = (ListView) findViewById(R.id.listView_paper);
         PaperListViewAdapter adapter = new PaperListViewAdapter(this, papers);
         listView_paper.setAdapter(adapter);
+
+        listView_paper.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Paper paper = (Paper)adapterView.getItemAtPosition(i);
+                Intent intent = new Intent(getBaseContext(), PaperActivity.class);
+                intent.putExtra("paperTitle", paper.getTitle());
+                intent.putExtra("paperAbstract", paper.getAbstract());
+                intent.putExtra("paperAuthor", paper.getAuthorWithAff());
+                intent.putExtra("sessionKey",sessionKey);
+                startActivity(intent);
+            }
+        });
 
         mHeaderView = findViewById(R.id.header);
         ViewCompat.setElevation(mHeaderView, getResources().getDimension(R.dimen.toolbar_elevation));
@@ -165,7 +181,7 @@ public class SessionActivity extends BaseActivity implements ObservableScrollVie
 
         String previousText = settings.getString(notesSharedPref, "");
         editText.setText(previousText);
-
+        editText.setTextColor(Color.BLACK);
         alert.setMessage("Enter notes");
         alert.setTitle("Notes");
         alert.setView(editText);
@@ -213,12 +229,14 @@ public class SessionActivity extends BaseActivity implements ObservableScrollVie
                 Toast.makeText(this, "Photo is saved", Toast.LENGTH_LONG).show();
 
                 String imageUri = getRealPathFromURI(fileUri);
-                populateImages(imageUri);
+                if (!hasImage(image3)) {
+                    populateImages(imageUri);
+                }
 
                 SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = settings.edit();
                 String imageUris = settings.getString(imageSharedPref, "");
-                if (imageUris != null && !imageUris.isEmpty()) {
+                if (!imageUris.isEmpty()) {
                     imageUris += "," + imageUri;
                 } else {
                     imageUris = imageUri;

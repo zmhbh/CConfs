@@ -18,6 +18,7 @@ import cmu.cconfs.model.parseModel.Message;
 import cmu.cconfs.model.parseModel.Paper;
 import cmu.cconfs.model.parseModel.Photo;
 import cmu.cconfs.model.parseModel.Program;
+import cmu.cconfs.model.parseModel.Rate;
 import cmu.cconfs.model.parseModel.Room;
 import cmu.cconfs.model.parseModel.Session_Room;
 import cmu.cconfs.model.parseModel.Session_Timeslot;
@@ -87,6 +88,7 @@ public class CConfsApplication extends Application {
         ParseObject.registerSubclass(Version.class);
         ParseObject.registerSubclass(Message.class);
         ParseObject.registerSubclass(Photo.class);
+        ParseObject.registerSubclass(Rate.class);
 
         // enable the Local Datastore
         Parse.enableLocalDatastore(getApplicationContext());

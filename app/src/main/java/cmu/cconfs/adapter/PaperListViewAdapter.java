@@ -1,7 +1,6 @@
 package cmu.cconfs.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cmu.cconfs.PaperActivity;
 import cmu.cconfs.R;
 import cmu.cconfs.model.parseModel.Paper;
 
@@ -37,6 +35,9 @@ public class PaperListViewAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
+        if (papers != null) {
+            return papers.get(position);
+        }
         return null;
     }
 
@@ -54,31 +55,6 @@ public class PaperListViewAdapter extends BaseAdapter {
         TextView paperAffiTextView = (TextView) view.findViewById(R.id.paperAffiliation);
         paperTitleTextView.setText(paper.getTitle());
         paperAffiTextView.setText(paper.getAffiliation());
-
-
-        paperTitleTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(v.getContext(), PaperActivity.class);
-                intent.putExtra("paperTitle", paper.getTitle());
-                intent.putExtra("paperAbstract", paper.getAbstract());
-                intent.putExtra("paperAuthor", paper.getAuthorWithAff());
-                v.getContext().startActivity(intent);
-            }
-        });
-
-        paperAffiTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(v.getContext(), PaperActivity.class);
-                intent.putExtra("paperTitle", paper.getTitle());
-                intent.putExtra("paperAbstract", paper.getAbstract());
-                intent.putExtra("paperAuthor", paper.getAuthorWithAff());
-                v.getContext().startActivity(intent);
-            }
-        });
 
         return view;
     }
