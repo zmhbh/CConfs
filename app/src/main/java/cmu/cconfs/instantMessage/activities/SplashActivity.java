@@ -67,7 +67,9 @@ public class SplashActivity extends IMBaseActivity {
 						Thread.sleep(sleepTime);
 					} catch (InterruptedException e) {
 					}
-					startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+					Intent intent=new Intent(SplashActivity.this, cmu.cconfs.LoginActivity.class);
+					intent.putExtra("from","im");
+					startActivity(intent);
 					finish();
 				}
 			}

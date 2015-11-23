@@ -69,7 +69,7 @@ public class IMActivity extends IMBaseActivity {
                         Thread.sleep(sleepTime);
                     } catch (InterruptedException e) {
                     }
-                    startActivity(new Intent(IMActivity.this, LoginActivity.class));
+                    startActivity(new Intent(IMActivity.this, cmu.cconfs.LoginActivity.class));
                     finish();
                 }
             }

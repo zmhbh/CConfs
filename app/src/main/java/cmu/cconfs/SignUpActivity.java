@@ -1,6 +1,7 @@
 package cmu.cconfs;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.easemob.EMError;
+import com.easemob.chat.EMChatManager;
+import com.easemob.exceptions.EaseMobException;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -72,7 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
         dialog.show();
     }
     private void signUp(String username, String password, String email){
-        ParseUser user = new ParseUser();
+        final ParseUser user = new ParseUser();
         user.setUsername(username);
         user.setPassword(password);
         user.setEmail(email);
@@ -80,23 +84,87 @@ public class SignUpActivity extends AppCompatActivity {
 // other fields can be set just like with ParseObject
 //        user.put("phone", "650-253-0000");
 
-        user.signUpInBackground(new SignUpCallback() {
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.e("sign up", "success");
-                    Toast.makeText(getApplicationContext(), "Sign up Success!", Toast.LENGTH_LONG).show();
-                    finish();
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage(getResources().getString(R.string.Is_the_registered));
+        pd.show();
 
-                    // Hooray! Let them use the app now.
-                } else {
-                    if(e.getMessage().contains("This email has already been registered")) {
-                        postError("This email has already been registered. You can reset your password at the login page.");
-                    }
-                    else
-                        postError(e.getMessage());
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    // 调用sdk注册方法
+                    EMChatManager.getInstance().createAccountOnServer(mUsername.getText().toString().trim(), mPassword.getText().toString().trim());
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            if (!SignUpActivity.this.isFinishing())
+                                pd.dismiss();
+                            // 保存用户名
+                            CConfsApplication.getInstance().setUserName(mUsername.getText().toString().trim());
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registered_successfully), Toast.LENGTH_SHORT).show();
+
+                            user.signUpInBackground(new SignUpCallback() {
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        Log.e("sign up", "success");
+                                        Toast.makeText(getApplicationContext(), "Sign up Success!", Toast.LENGTH_LONG).show();
+                                        try {
+                                            EMChatManager.getInstance().createAccountOnServer(mUsername.getText().toString().trim(), mPassword.getText().toString().trim());
+                                            // 保存用户名
+                                            CConfsApplication.getInstance().setUserName(mUsername.getText().toString().trim());
+                                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registered_successfully), Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        } catch (final EaseMobException ee) {
+                                            int errorCode = ee.getErrorCode();
+                                            if (errorCode == EMError.NONETWORK_ERROR) {
+                                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_anomalies), Toast.LENGTH_SHORT).show();
+                                            } else if (errorCode == EMError.USER_ALREADY_EXISTS) {
+                                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.User_already_exists), Toast.LENGTH_SHORT).show();
+                                            } else if (errorCode == EMError.UNAUTHORIZED) {
+                                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.registration_failed_without_permission), Toast.LENGTH_SHORT).show();
+                                            } else if (errorCode == EMError.ILLEGAL_USER_NAME) {
+                                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.illegal_user_name), Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registration_failed) + ee.getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+
+
+                                        // Hooray! Let them use the app now.
+                                    } else {
+                                        if (e.getMessage().contains("This email has already been registered")) {
+                                            postError("This email has already been registered. You can reset your password at the login page.");
+                                        } else
+                                            postError(e.getMessage());
+                                    }
+                                }
+                            });
+
+                            finish();
+                        }
+                    });
+                } catch (final EaseMobException e) {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            if (!SignUpActivity.this.isFinishing())
+                                pd.dismiss();
+                            int errorCode=e.getErrorCode();
+                            if(errorCode== EMError.NONETWORK_ERROR){
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_anomalies), Toast.LENGTH_SHORT).show();
+                            }else if(errorCode == EMError.USER_ALREADY_EXISTS){
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.User_already_exists), Toast.LENGTH_SHORT).show();
+                            }else if(errorCode == EMError.UNAUTHORIZED){
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.registration_failed_without_permission), Toast.LENGTH_SHORT).show();
+                            }else if(errorCode == EMError.ILLEGAL_USER_NAME){
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.illegal_user_name), Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registration_failed) + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             }
-        });
+        }).start();
+
+
     }
 
 }

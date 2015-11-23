@@ -31,12 +31,14 @@ import android.widget.Toast;
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatOptions;
+import com.parse.ParseUser;
 
 import cmu.cconfs.R;
 import cmu.cconfs.instantMessage.Constant;
 import cmu.cconfs.instantMessage.IMHXSDKHelper;
 import cmu.cconfs.instantMessage.IMHXSDKModel;
 import cmu.cconfs.instantMessage.imlib.controller.HXSDKHelper;
+import cmu.cconfs.utils.PreferencesManager;
 
 /**
  * 设置界面
@@ -345,6 +347,9 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 	}
 
 	void logout() {
+		ParseUser.logOut();
+		PreferencesManager mPreferencesManager = new PreferencesManager(getActivity());
+		mPreferencesManager.writeBooleanPreference("LoggedIn", false);
 		final ProgressDialog pd = new ProgressDialog(getActivity());
 		String st = getResources().getString(R.string.Are_logged_out);
 		pd.setMessage(st);
@@ -359,7 +364,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 						pd.dismiss();
 						// 重新显示登陆页面
 						((IMMainActivity) getActivity()).finish();
-						startActivity(new Intent(getActivity(), LoginActivity.class));
+						startActivity(new Intent(getActivity(), cmu.cconfs.LoginActivity.class));
 						
 					}
 				});

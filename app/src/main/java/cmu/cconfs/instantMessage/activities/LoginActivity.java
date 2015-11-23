@@ -61,7 +61,6 @@ public class LoginActivity extends IMBaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		// 如果用户名密码都有，直接进入主页面
 		if (IMHXSDKHelper.getInstance().isLogined()) {
 			autoLogin = true;
