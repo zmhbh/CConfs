@@ -1,16 +1,14 @@
-package cmu.cconfs.utils;
+package cmu.cconfs;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.parse.ParseUser;
 
-import cmu.cconfs.R;
+import cmu.cconfs.utils.PreferencesManager;
 
 public class UserActivity extends Activity {
     PreferencesManager mPreferencesManager;

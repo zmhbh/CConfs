@@ -37,6 +37,8 @@ public class Timeslot extends ParseObject {
     }
 
     public static ParseQuery<Timeslot> getQuery() {
-        return ParseQuery.getQuery(Timeslot.class);
+        ParseQuery<Timeslot> parseQuery = ParseQuery.getQuery(Timeslot.class);
+        parseQuery.setLimit(1000);
+        return parseQuery;
     }
 }

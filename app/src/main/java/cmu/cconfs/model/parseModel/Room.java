@@ -37,6 +37,8 @@ public class Room extends ParseObject {
     }
 
     public static ParseQuery<Room> getQuery() {
-        return ParseQuery.getQuery(Room.class);
+        ParseQuery<Room> parseQuery = ParseQuery.getQuery(Room.class);
+        parseQuery.setLimit(1000);
+        return parseQuery;
     }
 }

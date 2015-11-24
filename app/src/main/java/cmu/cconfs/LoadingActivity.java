@@ -1,14 +1,20 @@
 package cmu.cconfs;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.github.jlmd.animatedcircleloadingview.AnimatedCircleLoadingView;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
+import java.io.IOException;
+import java.net.Socket;
 
 import cmu.cconfs.model.CheckVersion;
 import cmu.cconfs.model.parseModel.Paper;
@@ -23,9 +29,11 @@ import cmu.cconfs.utils.data.RoomProvider;
 
 public class LoadingActivity extends AppCompatActivity {
 
-    private AnimatedCircleLoadingView animatedCircleLoadingView;
+    private static final String TAG = "LoadingActivity";
+    private static final String INTERNET_CONNECTION_URL = "www.baidu.com";
 
     private boolean success;
+    private AnimatedCircleLoadingView animatedCircleLoadingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,21 +50,11 @@ public class LoadingActivity extends AppCompatActivity {
         AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
 
             @Override
-            protected void onPreExecute() {
-
-
-            }
-
-            @Override
             protected Void doInBackground(Void... arg0) {
-
                 try {
-                    //Do something...
                     preProcessing();
-
                     Thread.sleep(3000);
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 return null;
@@ -64,17 +62,23 @@ public class LoadingActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(Void result) {
-
-
                 if (success) {
                     Intent intent = new Intent();
                     intent.setClass(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     finish();
+                } else  {
+                    final AlertDialog.Builder alert = new AlertDialog.Builder(LoadingActivity.this);
+                    alert.setMessage("Please enable network connection and try again!");
+                    alert.setTitle("Error!");
 
+                    alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            LoadingActivity.this.finish();
+                        }
+                    });
 
-//                    Toast.makeText(getApplicationContext(), "Loading Data finished",
-//                            Toast.LENGTH_SHORT).show();
+                    alert.show();
                 }
 
             }
@@ -85,44 +89,44 @@ public class LoadingActivity extends AppCompatActivity {
 
 
     private void preProcessing() {
-        if (!checkLocalExists()) {
-            if (checkNetwork()) {
+        if (hasNetworkConnection()) {
+            if (!isUpToDate())
                 loadFromParse();
-            } else {
-                //enable network
-
-                //if failure
+        } else {
+            if (!hasLocalStore()) {
                 animatedCircleLoadingView.stopFailure();
                 return;
             }
-        } else {
-            if (!checkNetwork()) {
-                // for future
-                //if network re-connect
-                if (true) {
-                    if (!isUpToDate())
-                        loadFromParse();
-                }
-            } else {
-                if (!isUpToDate())
-                    loadFromParse();
-            }
         }
-
 
         success = true;
         populateDataProvider();
         populateRoomProvider();
-//        Toast.makeText(LoadingActivity.this, "populateDataProvider finished:",
-//                Toast.LENGTH_SHORT).show();
         animatedCircleLoadingView.stopOk();
     }
 
-    private boolean checkNetwork() {
-        return true;
+    private boolean hasNetworkConnection() {
+        Socket socket = null;
+        boolean reachable = false;
+        try {
+            socket = new Socket(INTERNET_CONNECTION_URL, 80);
+            reachable = true;
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        } finally {
+            if (socket != null) {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+
+        }
+        return reachable;
     }
 
-    private boolean checkLocalExists() {
+    private boolean hasLocalStore() {
         Version local = null;
         ParseQuery<Version> query = Version.getQuery();
         query.fromLocalDatastore();
@@ -137,6 +141,9 @@ public class LoadingActivity extends AppCompatActivity {
     }
 
     private boolean isUpToDate() {
+        if (!hasLocalStore()) {
+            return false;
+        }
         Version local = null;
         Version remote = null;
 
@@ -152,13 +159,11 @@ public class LoadingActivity extends AppCompatActivity {
         query = Version.getQuery();
         try {
             remote = query.getFirst();
-            ;
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         CheckVersion checkVersion = new CheckVersion(local);
-
 
         return checkVersion.equals(remote);
     }
@@ -190,6 +195,7 @@ public class LoadingActivity extends AppCompatActivity {
         DataProvider dataProvider = new DataProvider();
         application.setDataProvider(dataProvider);
     }
+
     private void populateRoomProvider() {
         CConfsApplication application = new CConfsApplication();
         RoomProvider roomProvider = new RoomProvider();

@@ -1,7 +1,9 @@
 package cmu.cconfs;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -68,32 +69,48 @@ public class ImageDetailsActivity extends AppCompatActivity {
     }
 
     public void didTapShareButton(View view) {
-        boolean loggedIn = mPreferencesManager.getBooleanPreference("LoggedIn", false);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(ImageDetailsActivity.this);
+        alert.setMessage("Do you really want to share this photo with public?");
+        alert.setTitle("Message");
 
-        if (!loggedIn) {
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        } else {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
-            byte[] scaledData = bos.toByteArray();
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                boolean loggedIn = mPreferencesManager.getBooleanPreference("LoggedIn", false);
 
-            ParseFile file = new ParseFile("photo.png", scaledData);
-            file.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e != null) {
-                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Upload Success!", Toast.LENGTH_LONG).show();
-                    }
+                if (!loggedIn) {
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                } else {
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                    byte[] scaledData = bos.toByteArray();
+
+                    ParseFile file = new ParseFile("photo.png", scaledData);
+                    file.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null) {
+                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Upload Success!", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                    Photo photo = new Photo();
+                    photo.setSessionKey(sessionKey);
+                    photo.setPhotoFile(file);
+                    photo.setPublisher(ParseUser.getCurrentUser().getUsername());
+                    photo.saveInBackground();
                 }
-            });
-            Photo photo = new Photo();
-            photo.setSessionKey(sessionKey);
-            photo.setPhotoFile(file);
-            photo.setPublisher(ParseUser.getCurrentUser().getUsername());
-            photo.saveInBackground();
-        }
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // what ever you want to do with No option.
+            }
+        });
+
+        alert.show();
 
     }
 

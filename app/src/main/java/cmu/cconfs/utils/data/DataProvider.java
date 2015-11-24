@@ -6,8 +6,14 @@ import android.util.Log;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import cmu.cconfs.model.parseModel.Session_Timeslot;
 import cmu.cconfs.model.parseModel.Timeslot;
@@ -51,16 +57,68 @@ public class DataProvider {
                 e.printStackTrace();
             }
 
-            Log.e("XXXX!!!!@@@@@@@: ", "results.size: " + results.size());
+            final SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
+            Collections.sort(results, new Comparator<Timeslot>() {
+                        @Override
+                        public int compare(Timeslot t1, Timeslot t2) {
+                            String time1 = t1.getValue().split("-")[0];
+                            String time2 = t2.getValue().split("-")[0];
+
+                            try {
+                                Date date1 = parser.parse(time1);
+                                Date date2 = parser.parse(time2);
+                                if (date1.before(date2)) {
+                                    return -1;
+                                } else if (date1.after(date2)) {
+                                    return 1;
+                                } else {
+                                    return 1;
+                                }
+                            } catch (Exception e) {
+
+                            }
+
+                            return 0;
+                        }
+                    }
+
+            );
+
+            Set<String> set = new HashSet<>();
+            Log.e("XXXX!!!!@@@@@@@: ", "date is " + i + "  Time results.size: " + results.size());
 
             for (int j = 0; j < results.size(); j++) {
+                if (set.contains(results.get(j).getValue())) {
+                    continue;
+                }
+                set.add(results.get(j).getValue());
                 final long groupId = j;
                 final UnityDataProvider.ConcreteGroupData group = new UnityDataProvider.ConcreteGroupData(groupId, results.get(j).getValue());
                 final List<UnityDataProvider.ConcreteChildData> children = new ArrayList<>();
+
+                query = Timeslot.getQuery();
+                query.fromLocalDatastore();
+                query.fromPin(Timeslot.PIN_TAG);
+                query.whereEqualTo("program_id", i + 1);
+                query.whereEqualTo("value", results.get(j).getValue());
+
+                // groupItems
+                List<Timeslot> temp = null;
+                List<Integer> validId = new ArrayList<>();
+                try {
+                    temp = query.find();
+                    for (Timeslot timeslot : temp) {
+                        validId.add(timeslot.getTimeslotId());
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 query = Session_Timeslot.getQuery();
                 query.fromLocalDatastore();
                 query.fromPin(Session_Timeslot.PIN_TAG);
-                query.whereEqualTo("timeslot_id", results.get(j).getTimeslotId());
+                //query.whereEqualTo("timeslot_id", results.get(j).getTimeslotId());
+                query.whereContainedIn("timeslot_id",validId);
                 query.orderByAscending("session_id");
                 //childItems
                 List<Session_Timeslot> sessionResults = null;
@@ -70,7 +128,7 @@ public class DataProvider {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
+                Log.e("XXXX!!!!@@@@@@@: ", "time is " + results.get(j).getValue() + "  Session results.size: " + sessionResults.size());
                 for (int k = 0; k < sessionResults.size(); k++) {
                     final long childId = group.generateNewChildId();
                     Session_Timeslot sessionResult = sessionResults.get(k);

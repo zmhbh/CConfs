@@ -86,7 +86,7 @@ public class ImageGridViewActivity extends BaseActivity {
 
     }
 
-    public class AsyncHttpTask extends AsyncTask<String, Void, Integer> {
+    private class AsyncHttpTask extends AsyncTask<String, Void, Integer> {
 
         @Override
         protected Integer doInBackground(String... params) {

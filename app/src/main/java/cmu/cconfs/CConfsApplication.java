@@ -19,6 +19,7 @@ import cmu.cconfs.model.parseModel.Message;
 import cmu.cconfs.model.parseModel.Paper;
 import cmu.cconfs.model.parseModel.Photo;
 import cmu.cconfs.model.parseModel.Program;
+import cmu.cconfs.model.parseModel.Rate;
 import cmu.cconfs.model.parseModel.Room;
 import cmu.cconfs.model.parseModel.Session_Room;
 import cmu.cconfs.model.parseModel.Session_Timeslot;
@@ -49,12 +50,13 @@ public class CConfsApplication extends Application {
     public UnityDataProvider getUnityDataProvider(int dateIndex) {
         return dataProvider.getUnityDataProvider(dateIndex);
     }
+
     public RoomDataProvider getRoomDataProvider(int roomIndex) {
         return roomProvider.getRoomDataProvider(roomIndex);
     }
 
-//    instant message
-public static Context applicationContext;
+    //    instant message
+    public static Context applicationContext;
     private static CConfsApplication instance;
     // login user name
     public final String PREF_USERNAME = "username";
@@ -87,6 +89,7 @@ public static Context applicationContext;
         ParseObject.registerSubclass(Version.class);
         ParseObject.registerSubclass(Message.class);
         ParseObject.registerSubclass(Photo.class);
+        ParseObject.registerSubclass(Rate.class);
 
         // enable the Local Datastore
         Parse.enableLocalDatastore(getApplicationContext());
@@ -153,8 +156,8 @@ public static Context applicationContext;
     /**
      * 退出登录,清空数据
      */
-    public void logout(final boolean isGCM,final EMCallBack emCallBack) {
+    public void logout(final boolean isGCM, final EMCallBack emCallBack) {
         // 先调用sdk logout，在清理app中自己的数据
-        hxSDKHelper.logout(isGCM,emCallBack);
+        hxSDKHelper.logout(isGCM, emCallBack);
     }
 }

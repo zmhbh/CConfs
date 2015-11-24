@@ -1,9 +1,7 @@
 package cmu.cconfs;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +16,6 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import cmu.cconfs.utils.PreferencesManager;
-import cmu.cconfs.utils.ResetPasswordActivity;
 
 public class LoginActivity extends AppCompatActivity {
     protected Button mLoginButton;
