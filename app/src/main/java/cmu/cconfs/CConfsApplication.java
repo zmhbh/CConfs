@@ -15,6 +15,7 @@ import com.parse.ParseUser;
 
 import cmu.cconfs.instantMessage.IMHXSDKHelper;
 import cmu.cconfs.model.Todo;
+import cmu.cconfs.model.parseModel.FloorPlan;
 import cmu.cconfs.model.parseModel.Message;
 import cmu.cconfs.model.parseModel.Paper;
 import cmu.cconfs.model.parseModel.Photo;
@@ -90,6 +91,7 @@ public class CConfsApplication extends Application {
         ParseObject.registerSubclass(Message.class);
         ParseObject.registerSubclass(Photo.class);
         ParseObject.registerSubclass(Rate.class);
+        ParseObject.registerSubclass(FloorPlan.class);
 
         // enable the Local Datastore
         Parse.enableLocalDatastore(getApplicationContext());

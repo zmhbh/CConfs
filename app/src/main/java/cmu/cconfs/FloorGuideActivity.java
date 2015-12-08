@@ -3,12 +3,19 @@ package cmu.cconfs;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseQuery;
 import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
+
+import java.util.List;
 
 import cmu.cconfs.adapter.FloorGuideAdapter;
 import cmu.cconfs.fragment.FloorGuideFragment;
+import cmu.cconfs.model.parseModel.FloorPlan;
 
 
 public class FloorGuideActivity extends FragmentActivity {
@@ -33,31 +40,33 @@ public class FloorGuideActivity extends FragmentActivity {
         mAdapter = new FloorGuideAdapter(getSupportFragmentManager());
         mAdapter.setPager(mPager);
 
+        ParseQuery<FloorPlan> query = FloorPlan.getQuery();
+        query.fromLocalDatastore();
+        query.fromPin(FloorPlan.PIN_TAG);
+        List<FloorPlan> floorPlans = null;
+        try {
+            floorPlans = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        Bundle thirdFloor = new Bundle();
-        thirdFloor.putInt("image", R.drawable.third);
-        thirdFloor.putString("name", "Third Floor");
-        FloorGuideFragment thirdFloorFragment = new FloorGuideFragment();
-        thirdFloorFragment.setArguments(thirdFloor);
+        for (FloorPlan floorPlan : floorPlans) {
+            try {
+                ParseFile parseFile = floorPlan.getPhotoFile();
+                byte[] response = parseFile.getData();
 
-        Bundle fourthFloor = new Bundle();
-        fourthFloor.putInt("image", R.drawable.fourth);
-        fourthFloor.putString("name", "Fourth Floor");
-        FloorGuideFragment fourthFloorFragment = new FloorGuideFragment();
-        fourthFloorFragment.setArguments(fourthFloor);
-
-        Bundle seventhFloor = new Bundle();
-        seventhFloor.putInt("image", R.drawable.seventh);
-        seventhFloor.putString("name", "Seventh Floor");
-        FloorGuideFragment seventhFloorFragment = new FloorGuideFragment();
-        seventhFloorFragment.setArguments(seventhFloor);
-
-        mAdapter.add(thirdFloorFragment);
-        mAdapter.add(fourthFloorFragment);
-        mAdapter.add(seventhFloorFragment);
+                Bundle bundle = new Bundle();
+                bundle.putByteArray("image", response);
+                bundle.putString("name", floorPlan.getPhototName());
+                FloorGuideFragment floorFragment = new FloorGuideFragment();
+                floorFragment.setArguments(bundle);
+                mAdapter.add(floorFragment);
+            } catch (Exception e) {
+                Log.e("photo", "Error: " + e.getMessage());
+            }
+        }
 
         mPager.setAdapter(mAdapter);
-
 
     }
 

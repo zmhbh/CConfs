@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 import cmu.cconfs.model.CheckVersion;
+import cmu.cconfs.model.parseModel.FloorPlan;
 import cmu.cconfs.model.parseModel.Paper;
 import cmu.cconfs.model.parseModel.Program;
 import cmu.cconfs.model.parseModel.Room;
@@ -67,7 +68,7 @@ public class LoadingActivity extends AppCompatActivity {
                     intent.setClass(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     finish();
-                } else  {
+                } else {
                     final AlertDialog.Builder alert = new AlertDialog.Builder(LoadingActivity.this);
                     alert.setMessage("Please enable network connection and try again!");
                     alert.setTitle("Error!");
@@ -177,6 +178,7 @@ public class LoadingActivity extends AppCompatActivity {
         ParseQuery sessionTimeslotQuery = Session_Timeslot.getQuery();
         ParseQuery timeslotQuery = Timeslot.getQuery();
         ParseQuery versionQuery = Version.getQuery();
+        ParseQuery floorPlanQuery = FloorPlan.getQuery();
         try {
             ParseObject.pinAll(Paper.PIN_TAG, paperQuery.find());
             ParseObject.pinAll(Program.PIN_TAG, programQuery.find());
@@ -185,6 +187,7 @@ public class LoadingActivity extends AppCompatActivity {
             ParseObject.pinAll(Session_Timeslot.PIN_TAG, sessionTimeslotQuery.find());
             ParseObject.pinAll(Timeslot.PIN_TAG, timeslotQuery.find());
             ParseObject.pinAll(Version.PIN_TAG, versionQuery.find());
+            ParseObject.pinAll(FloorPlan.PIN_TAG, floorPlanQuery.find());
         } catch (ParseException e) {
             animatedCircleLoadingView.stopFailure();
         }
