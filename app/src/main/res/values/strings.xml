@@ -414,4 +414,11 @@
     <string name="title_activity_user">UserActivity</string>
     <string name="account">Account Setting</string>
     <string name="sign_out_label">Sign out</string>
+    <string name="title_activity_send_notification">SendNotificationActivity</string>
+    <string name="send_label">Send</string>
+
+     <string-array name="admin_mail_address">
+         <item>gqw1992@gmail.com</item>
+
+     </string-array>
 </resources>

@@ -1,6 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu_main"
+    tools:context=".MainActivity">
     <item android:id="@+id/action_settings" android:title="Refresh"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_sending" android:title="Send"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

@@ -1,17 +1,21 @@
 package cmu.cconfs;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.parse.ParseException;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -58,6 +62,33 @@ public class NotificationActivity extends AppCompatActivity implements WaveSwipe
         adapter = new NotificationAdapter(this, messages);
         mListview.setAdapter(adapter);
 
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item= menu.findItem(R.id.action_sending);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        String[] list = getResources().getStringArray(R.array.admin_mail_address);
+        item.setVisible(false);
+        if(currentUser != null) {
+            Log.e("Name",currentUser.getUsername() );
+            Log.e("Name",currentUser.getEmail());
+
+        }
+        else {
+            Log.e("NULL USER","NOT LOGGED IN");
+        }
+        if (currentUser != null) {
+            for (String s : list) {
+                if (currentUser.getEmail().equals(s)) {
+                    item.setVisible(true);
+                    Log.e("Vis", "TRUE");
+                    break;
+                }
+            }
+        }
+        super.onPrepareOptionsMenu(menu);
+        return true;
     }
 
 
@@ -114,6 +145,11 @@ public class NotificationActivity extends AppCompatActivity implements WaveSwipe
         if (id == R.id.action_settings) {
             mWaveSwipeRefreshLayout.setRefreshing(true);
             refresh();
+            return true;
+        } else if(id == R.id.action_sending) {
+            Intent intent = new Intent();
+            intent.setClass(getApplicationContext(), SendNotificationActivity.class);
+            startActivity(intent);
             return true;
         }
 
