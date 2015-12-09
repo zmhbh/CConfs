@@ -486,6 +486,11 @@
             android:enabled="true"
             android:exported="true" >
         </receiver>
+
+        <activity
+            android:name=".SendNotificationActivity"
+            android:label="@string/title_activity_send_notification" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/drawer_layout"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fitsSystemWindows="true">
+<!-- Your normal content view -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"></android.support.v7.widget.Toolbar>
+
+    <View
+        android:id="@+id/dropshadow"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/toolbar"
+        android:background="@drawable/toolbar_dropshadow" />
+
+    <EditText
+        android:id="@+id/notification_title"
+        android:inputType="textMultiLine"
+        android:lines="1"
+        android:minLines="1"
+        android:gravity="top|left"
+        android:maxLines="2"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:scrollbars="vertical"
+        android:layout_marginTop="10dp"
+        android:background="@color/btn_white_normal"
+        android:hint="Title"
+        android:textColorHint="#808080"
+        android:textColor="#000"
+        />
+    <EditText
+        android:id="@+id/notification_text"
+        android:inputType="textMultiLine"
+        android:lines="8"
+        android:minLines="10"
+        android:gravity="top|left"
+        android:maxLines="20"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:scrollbars="vertical"
+        android:layout_marginTop="2dp"
+        android:background="@color/btn_white_normal"
+        android:hint="Please the content of notification"
+        android:textColorHint="#808080"
+        android:textColor="#000"
+    />
+    <Button
+        android:id="@+id/send_Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="5dp"
+
+        android:text="@string/send_label"
+        android:background="@color/button_color"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:textSize="18sp"
+        android:textColor="#FFF" />
+</LinearLayout>
+</android.support.v4.widget.DrawerLayout>

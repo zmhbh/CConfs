@@ -44,12 +44,12 @@ public class ExpandableItemAdapter extends AbstractExpandableItemAdapter<Expanda
         // ExpandableItemAdapter requires stable ID, and also
         // have to implement the getGroupItemId()/getChildItemId() methods appropriately.
         setHasStableIds(true);
-        map.put(252, "7-2");
-        map.put(201, "7-1");
-        map.put(151, "6-30");
-        map.put(103, "6-29");
-        map.put(63, "6-28");
-        map.put(0, "6-27");
+        map.put(252, "6-27");
+        map.put(201, "6-28");
+        map.put(151, "6-29");
+        map.put(103, "6-30");
+        map.put(63, "7-1");
+        map.put(0, "7-2");
     }
 
     @Override
@@ -304,8 +304,15 @@ public class ExpandableItemAdapter extends AbstractExpandableItemAdapter<Expanda
         calendar.set(Calendar.MONTH, Integer.parseInt(time.split("-")[0]) - 1);
         calendar.set(Calendar.YEAR, 2015);
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(time.split("-")[1]));
+        Log.e("Month", Integer.parseInt(time.split("-")[0]) - 1 + "");
+        Log.e("Year", 2015 + "");
+        Log.e("Date", Integer.parseInt(time.split("-")[1]) + "");
+
 
         if(Integer.parseInt(time.split("-")[2].split(":")[1]) < 10) {
+            Log.e("HOUR_OF_DAY", Integer.parseInt(time.split("-")[2].split(":")[0]) - 1 + "");
+            Log.e("MINUTE", 50 + "");
+
             calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time.split("-")[2].split(":")[0]) - 1);
             calendar.set(Calendar.MINUTE, 50);
             if(Integer.parseInt(time.split("-")[2].split(":")[0]) - 1 >= 12)
@@ -314,6 +321,9 @@ public class ExpandableItemAdapter extends AbstractExpandableItemAdapter<Expanda
                 calendar.set(Calendar.AM_PM,Calendar.AM);
         }
         else {
+            Log.e("HOUR_OF_DAY",Integer.parseInt(time.split("-")[2].split(":")[0]) + "");
+            Log.e("MINUTE", Integer.parseInt(time.split("-")[2].split(":")[1]) - 10 + "");
+
             calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time.split("-")[2].split(":")[0]));
             calendar.set(Calendar.MINUTE, Integer.parseInt(time.split("-")[2].split(":")[1]) - 10);
             if(Integer.parseInt(time.split("-")[2].split(":")[0]) >= 12)

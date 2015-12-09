@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.parse.ParsePush;
+
 import org.askerov.dynamicgrid.DynamicGridView;
 
 import java.util.ArrayList;
@@ -85,7 +87,6 @@ public class HomeActivity extends AppCompatActivity {
                         intent.setClass(getApplicationContext(), NotificationActivity.class);
                         startActivity(intent);
                         break;
-
                     //About
                     case 7:
                         intent.setClass(getApplicationContext(), AboutActivity.class);
