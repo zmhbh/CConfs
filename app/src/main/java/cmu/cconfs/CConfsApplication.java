@@ -3,7 +3,6 @@ package cmu.cconfs;
 import android.app.Application;
 import android.content.Context;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.easemob.EMCallBack;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.parse.Parse;
@@ -14,6 +13,7 @@ import com.parse.ParsePush;
 import com.parse.ParseUser;
 
 import cmu.cconfs.instantMessage.IMHXSDKHelper;
+import cmu.cconfs.model.parseModel.Sponsor;
 import cmu.cconfs.model.Todo;
 import cmu.cconfs.model.parseModel.FloorPlan;
 import cmu.cconfs.model.parseModel.Message;
@@ -92,6 +92,7 @@ public class CConfsApplication extends Application {
         ParseObject.registerSubclass(Photo.class);
         ParseObject.registerSubclass(Rate.class);
         ParseObject.registerSubclass(FloorPlan.class);
+        ParseObject.registerSubclass(Sponsor.class);
 
         // enable the Local Datastore
         Parse.enableLocalDatastore(getApplicationContext());

@@ -15,7 +15,7 @@ import java.util.List;
 
 import cmu.cconfs.AboutActivity;
 import cmu.cconfs.R;
-import cmu.cconfs.model.Sponsor;
+import cmu.cconfs.model.parseModel.Sponsor;
 
 
 /**
@@ -95,8 +95,8 @@ public class SponsorListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         vh.titleView.setText(item.getName());
         vh.authorView.setText(item.getLink());
-        vh.imageView.setImageURI(Uri.parse(item.getImageUrl()));
-
+        if (item.getImageUrl() != null && !item.getImageUrl().isEmpty())
+            vh.imageView.setImageURI(Uri.parse(item.getImageUrl()));
 
     }
 
