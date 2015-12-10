@@ -10,8 +10,12 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.GsonBuilder;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import cmu.cconfs.model.parseModel.Message;
 
@@ -47,7 +51,19 @@ public class SendNotificationActivity extends AppCompatActivity {
                 ParsePush push = new ParsePush();
                 ParsePush.subscribeInBackground("CConfs");
                 push.setChannel("CConfs");
-                push.setMessage(notification);
+                JSONObject data = new JSONObject();
+                JSONObject json = new JSONObject();
+                try {
+                    data.put("message",notification);
+                    data.put("title",title);
+                    json.put("data", data);
+                    json.put("is_background",false);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                push.setData(json);
+                //push.setMessage(send);
                 push.sendInBackground();
 
                 Message n = new Message();
